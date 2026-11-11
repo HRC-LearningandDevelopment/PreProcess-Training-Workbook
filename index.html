@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pre-Process Training Online Workbook · HealthRecon Connect</title>
+<link rel="icon" href="assets/mark-outline.png">
+<script src="ard-workbook-data.js"></script>
+<style>
+@font-face{font-family:"Proxima Nova";font-weight:400;font-style:normal;font-display:swap;src:url("assets/fonts/pn-400.otf") format("opentype")}
+@font-face{font-family:"Proxima Nova";font-weight:400;font-style:italic;font-display:swap;src:url("assets/fonts/pn-400i.otf") format("opentype")}
+@font-face{font-family:"Proxima Nova";font-weight:600;font-style:normal;font-display:swap;src:url("assets/fonts/pn-600.otf") format("opentype")}
+@font-face{font-family:"Proxima Nova";font-weight:700;font-style:normal;font-display:swap;src:url("assets/fonts/pn-700.otf") format("opentype")}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#EEF4F7;font-family:"Proxima Nova","Helvetica Neue",Arial,sans-serif;color:#26384F;-webkit-font-smoothing:antialiased}
+a{color:#0279A0}
+a:hover{color:#0B1E3A}
+button,input,textarea,select{font:inherit;color:inherit}
+textarea::placeholder,input::placeholder{color:#8A97A8}
+:focus-visible{outline:3px solid #05B4E0;outline-offset:2px;border-radius:4px}
+</style>
+</helmet>
+<div style="min-height:100vh;font-family:'Proxima Nova','Helvetica Neue',Arial,sans-serif;font-size:17px;line-height:1.55;color:#26384F;background:#EEF4F7">
+
+  <sc-if value="{{ showGate }}" hint-placeholder-val="{{ false }}">
+    <div style="min-height:100vh;background:#0B1E3A;position:relative;overflow:hidden;display:flex;flex-direction:column">
+      <img src="assets/mark-outline.png" alt="" aria-hidden="true" style="position:absolute;right:-120px;top:50%;transform:translateY(-50%);height:120%;opacity:.07;pointer-events:none">
+      <div style="padding:28px clamp(20px,5vw,64px)"><img src="assets/logo-light.png" alt="HealthRecon Connect" style="height:44px;display:block"></div>
+      <div style="flex:1;display:flex;align-items:center;padding:20px clamp(20px,5vw,64px) 64px;position:relative">
+        <div style="width:100%;max-width:1080px;margin:0 auto">
+          <div style="color:#2DD4C8;font-weight:600;font-size:15px;margin-bottom:14px">UT Health San Antonio · Online Workbook</div>
+          <h1 style="color:#FFFFFF;font-size:clamp(34px,5vw,58px);line-height:1.05;letter-spacing:-.02em;margin:0 0 14px;font-weight:700;max-width:760px;text-wrap:balance">Pre-Process Training Online Workbook</h1>
+          <p style="color:#A9B8C9;font-size:18px;margin:0 0 40px;max-width:640px">Three Day Virtual Preprocess Training For Hospital Billing. Choose your workbook to begin.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px">
+            <div style="background:#FFFFFF;border-radius:16px;padding:30px;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:center;gap:12px"><span style="display:block;width:10px;height:26px;background:linear-gradient(160deg,#2DD4C8,#05B4E0);transform:skewY(-26deg);border-radius:2px"></span><span style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B6B80">For Participants</span></div>
+              <div style="font-size:26px;font-weight:700;color:#0B1E3A;line-height:1.2">Learner Workbook</div>
+              <p style="margin:0;color:#5B6B80;flex:1">Follow each session by its code, type your answers, and download your completed workbook at the end.</p>
+              <button onClick="{{ chooseLearner }}" style="align-self:flex-start;background:#05B4E0;color:#0B1E3A;border:0;border-radius:999px;padding:12px 26px;min-height:46px;font-weight:700;cursor:pointer" style-hover="background:#2DD4C8">Open learner workbook</button>
+            </div>
+            <div style="background:#142B4F;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:30px;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:center;gap:12px"><span style="display:block;width:10px;height:26px;background:#FFB547;transform:skewY(-26deg);border-radius:2px"></span><span style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#A9B8C9">For Facilitators</span></div>
+              <div style="font-size:26px;font-weight:700;color:#FFFFFF;line-height:1.2">Facilitator Workbook</div>
+              <p style="margin:0;color:#A9B8C9">Teaching guides, answer keys, private payer replies, scoring, and the day access codes.</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <input type="password" value="{{ pass }}" onChange="{{ onPass }}" onKeyDown="{{ passKey }}" placeholder="Facilitator passcode" aria-label="Facilitator passcode" style="flex:1 1 200px;min-height:46px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#FFFFFF;padding:0 20px;outline:none">
+                <button onClick="{{ chooseFaci }}" style="background:#FFFFFF;color:#0B1E3A;border:0;border-radius:999px;padding:12px 24px;min-height:46px;font-weight:700;cursor:pointer" style-hover="background:#E4F5F9">Open workbook</button>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.1);padding-top:14px">
+                <span style="flex:1 1 200px;color:#A9B8C9;font-size:15px">Presentation view looks like the learner workbook, with a button to reveal answers. Same passcode.</span>
+                <button onClick="{{ choosePresent }}" style="background:transparent;color:#FFFFFF;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:10px 22px;min-height:46px;font-weight:700;cursor:pointer" style-hover="border-color:#2DD4C8;color:#2DD4C8">Open presentation view</button>
+              </div>
+              <sc-if value="{{ hasPassMsg }}" hint-placeholder-val="{{ false }}"><div style="color:#FF6F91;font-size:15px;font-weight:600">{{ passMsg }}</div></sc-if>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showReg }}" hint-placeholder-val="{{ false }}">
+    <div style="min-height:100vh;background:#0B1E3A;position:relative;overflow:hidden;display:flex;flex-direction:column">
+      <img src="assets/mark-outline.png" alt="" aria-hidden="true" style="position:absolute;right:-120px;top:50%;transform:translateY(-50%);height:120%;opacity:.07;pointer-events:none">
+      <div style="padding:28px clamp(20px,5vw,64px)"><img src="assets/logo-light.png" alt="HealthRecon Connect" style="height:44px;display:block"></div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:10px 20px 60px;position:relative">
+        <div style="width:100%;max-width:640px;background:#FFFFFF;border-radius:16px;padding:clamp(24px,4vw,40px)">
+          <div style="color:#0279A0;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Learner Registration</div>
+          <h1 style="margin:0 0 8px;color:#0B1E3A;font-size:clamp(26px,3vw,32px);line-height:1.15">Pre-Process Training Online Workbook</h1>
+          <p style="margin:0 0 24px;color:#5B6B80;font-size:16px">Register once on this computer. Your facilitator uses these details to follow your progress, time, and scores.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:14.5px;font-weight:700;color:#0B1E3A">Full Name *<input autocomplete="name" placeholder="First and last name" value="{{ rName }}" onChange="{{ onRName }}" onKeyDown="{{ regKey }}" style="min-height:48px;border:1px solid #DAE4EA;border-radius:10px;padding:0 14px;font-size:17px;font-weight:400;outline:none" style-focus="border-color:#05B4E0"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:14.5px;font-weight:700;color:#0B1E3A">HRC Email *<input type="email" autocomplete="email" placeholder="Your HRC email address" value="{{ rEmail }}" onChange="{{ onREmail }}" onKeyDown="{{ regKey }}" style="min-height:48px;border:1px solid #DAE4EA;border-radius:10px;padding:0 14px;font-size:17px;font-weight:400;outline:none" style-focus="border-color:#05B4E0"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:14.5px;font-weight:700;color:#0B1E3A">Employee ID<input  value="{{ rEmp }}" onChange="{{ onREmp }}" onKeyDown="{{ regKey }}" style="min-height:48px;border:1px solid #DAE4EA;border-radius:10px;padding:0 14px;font-size:17px;font-weight:400;outline:none" style-focus="border-color:#05B4E0"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:14.5px;font-weight:700;color:#0B1E3A">Cohort / Batch<input placeholder="e.g. UTH Batch 1" value="{{ rCohort }}" onChange="{{ onRCohort }}" onKeyDown="{{ regKey }}" style="min-height:48px;border:1px solid #DAE4EA;border-radius:10px;padding:0 14px;font-size:17px;font-weight:400;outline:none" style-focus="border-color:#05B4E0"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:14.5px;font-weight:700;color:#0B1E3A">Team / LOB<input placeholder="e.g. AR Follow-Up" value="{{ rTeam }}" onChange="{{ onRTeam }}" onKeyDown="{{ regKey }}" style="min-height:48px;border:1px solid #DAE4EA;border-radius:10px;padding:0 14px;font-size:17px;font-weight:400;outline:none" style-focus="border-color:#05B4E0"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:14.5px;font-weight:700;color:#0B1E3A">Supervisor / Team Lead<input  value="{{ rSup }}" onChange="{{ onRSup }}" onKeyDown="{{ regKey }}" style="min-height:48px;border:1px solid #DAE4EA;border-radius:10px;padding:0 14px;font-size:17px;font-weight:400;outline:none" style-focus="border-color:#05B4E0"></label>
+          </div>
+          <sc-if value="{{ hasRegMsg }}" hint-placeholder-val="{{ false }}"><div style="margin-top:14px;background:#FDE2E9;color:#9B1B3F;border-radius:10px;padding:10px 14px;font-weight:600">{{ regMsg }}</div></sc-if>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px">
+            <button onClick="{{ doRegister }}" style="background:#05B4E0;color:#0B1E3A;border:0;border-radius:999px;padding:0 28px;min-height:50px;font-weight:700;cursor:pointer;font-size:17px" style-hover="background:#2DD4C8">{{ regBtn }}</button>
+            <sc-if value="{{ hasRegBack }}" hint-placeholder-val="{{ false }}"><button onClick="{{ regBack }}" style="background:none;border:0;color:#5B6B80;text-decoration:underline;cursor:pointer;min-height:44px">{{ regBackLbl }}</button></sc-if>
+            <button onClick="{{ regSwitch }}" style="margin-left:auto;background:none;border:0;color:#5B6B80;text-decoration:underline;cursor:pointer;min-height:44px;font-size:14.5px">Not a learner?</button>
+          </div>
+          <p style="margin:18px 0 0;color:#8A97A8;font-size:13.5px">* Required. Time is counted only while the workbook is open on your screen and you are active.</p>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showApp }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ isIdle }}" hint-placeholder-val="{{ false }}">
+      <div style="position:fixed;inset:0;z-index:90;background:rgba(11,30,58,.6);display:flex;align-items:center;justify-content:center;padding:20px">
+        <div role="dialog" aria-modal="true" style="width:100%;max-width:440px;background:#FFFFFF;border-radius:16px;padding:30px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+          <div style="display:flex;justify-content:center;gap:6px;margin-bottom:16px"><span style="display:block;width:8px;height:24px;background:#2DD4C8;transform:skewY(-26deg);border-radius:2px"></span><span style="display:block;width:8px;height:24px;background:#05B4E0;transform:skewY(-26deg);border-radius:2px"></span><span style="display:block;width:8px;height:24px;background:#0B1E3A;transform:skewY(-26deg);border-radius:2px"></span></div>
+          <div style="font-size:24px;font-weight:700;color:#0B1E3A;margin-bottom:8px">Are you still there?</div>
+          <p style="margin:0 0 22px;color:#5B6B80;text-wrap:pretty">{{ idleMsg }}</p>
+          <button onClick="{{ confirmHere }}" style="background:#05B4E0;color:#0B1E3A;border:0;border-radius:999px;padding:0 30px;min-height:50px;font-weight:700;cursor:pointer;font-size:17px" style-hover="background:#2DD4C8">Yes, I’m here</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:20;background:#0B1E3A;padding:10px 16px">
+        <button onClick="{{ toggleNav }}" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);color:#FFFFFF;border:0;border-radius:999px;padding:8px 14px;min-height:44px;font-weight:700;cursor:pointer">
+          <span style="display:inline-flex;flex-direction:column;gap:3px"><i style="display:block;width:16px;height:2px;background:currentColor"></i><i style="display:block;width:16px;height:2px;background:currentColor"></i><i style="display:block;width:16px;height:2px;background:currentColor"></i></span>
+          Menu
+        </button>
+        <img src="assets/logo-light.png" alt="HealthRecon Connect" style="height:32px;width:auto;display:block">
+      </div>
+    </sc-if>
+    <sc-if value="{{ showScrim }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ toggleNav }}" style="position:fixed;inset:0;background:rgba(11,30,58,.45);z-index:30"></div>
+    </sc-if>
+
+    <aside style="{{ sidebarStyle }}">
+      <div style="padding:20px 18px 6px 12px"><img src="assets/logo-light.png" alt="HealthRecon Connect" style="width:212px;display:block"></div>
+      <div style="padding:6px 24px 4px;font-weight:700;color:#FFFFFF;font-size:16px;line-height:1.3">Pre-Process Training Online Workbook</div>
+      <div style="padding:0 24px 14px;display:flex;align-items:center;gap:8px;font-size:13.5px;color:#2DD4C8;font-weight:600">{{ roleLabel }}</div>
+      <div style="margin:0 20px 8px;display:flex;gap:6px">
+        <input value="{{ jump }}" onChange="{{ onJump }}" onKeyDown="{{ jumpKey }}" placeholder="Go to code or page, e.g. 1.3" aria-label="Go to session code" style="flex:1;min-width:0;min-height:40px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#FFFFFF;padding:0 14px;font-size:14.5px;outline:none">
+        <button onClick="{{ doJump }}" style="border:0;border-radius:999px;background:#05B4E0;color:#0B1E3A;font-weight:700;padding:0 16px;min-height:40px;cursor:pointer;font-size:14.5px">Go</button>
+      </div>
+      <sc-if value="{{ hasJumpMsg }}" hint-placeholder-val="{{ false }}"><div style="margin:0 24px 6px;font-size:13px;color:#FFB547">{{ jumpMsg }}</div></sc-if>
+      <nav style="flex:1;padding:0 12px 12px">
+        <sc-for list="{{ groups }}" as="g" hint-placeholder-count="5">
+          <div style="margin:18px 12px 6px;display:flex;justify-content:space-between;gap:8px;align-items:baseline">
+            <span style="font-size:12.5px;color:#8A97A8;font-weight:700;letter-spacing:.06em;text-transform:uppercase">{{ g.label }}</span>
+            <span style="font-size:12.5px;color:#8A97A8;font-weight:600">{{ g.meta }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
+              <button onClick="{{ it.go }}" style="{{ it.st }}">
+                <span style="{{ it.bar }}"></span>
+                <span style="display:flex;flex-direction:column;gap:1px;min-width:0">
+                  <span>{{ it.title }}</span>
+                  <span style="font-size:12.5px;color:#8A97A8;font-weight:600">{{ it.tag }}</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-for>
+      </nav>
+      <div style="padding:16px 24px 22px;border-top:1px solid rgba(255,255,255,.08);font-size:14px">
+        <div style="display:flex;justify-content:space-between;color:#FFFFFF;font-weight:600;margin-bottom:8px"><span>Workbook completed</span><span>{{ totalLabel }}</span></div>
+        <div style="height:6px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden"><span style="{{ meterStyle }}"></span></div>
+        <sc-if value="{{ showTime }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;color:#FFFFFF;font-weight:600">Time invested: {{ timeLabel }}</div></sc-if>
+        <div style="margin:8px 0 12px;color:#A9B8C9">{{ saveNote }}</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <sc-if value="{{ isPresent }}" hint-placeholder-val="{{ false }}"><button onClick="{{ toFaci }}" style="background:none;border:0;padding:0;color:#A9B8C9;text-decoration:underline;cursor:pointer;font-size:13.5px" style-hover="color:#FFFFFF">Back to facilitator workbook</button></sc-if>
+          <button onClick="{{ switchRole }}" style="background:none;border:0;padding:0;color:#A9B8C9;text-decoration:underline;cursor:pointer;font-size:13.5px" style-hover="color:#FFFFFF">Switch workbook</button>
+          <button onClick="{{ resetAll }}" style="background:none;border:0;padding:0;color:#A9B8C9;text-decoration:underline;cursor:pointer;font-size:13.5px" style-hover="color:#FFFFFF">Clear my answers</button>
+        </div>
+      </div>
+    </aside>
+
+    <main style="{{ mainStyle }}">
+      <sc-if value="{{ isFaci }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:880px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;font-weight:600;color:#0B1E3A"><span style="display:block;width:8px;height:20px;background:#FFB547;transform:skewY(-26deg);border-radius:2px"></span>Facilitator edition · keep off screen</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button onClick="{{ toPresent }}" style="display:inline-flex;align-items:center;gap:10px;background:#0B1E3A;color:#FFFFFF;border:0;border-radius:999px;padding:0 20px 0 14px;min-height:44px;cursor:pointer;font-size:14.5px;font-weight:700" style-hover="background:#142B4F"><span style="display:block;width:7px;height:18px;background:linear-gradient(160deg,#2DD4C8,#05B4E0);transform:skewY(-26deg);border-radius:2px"></span>Open presentation view</button>
+          <button onClick="{{ toggleHide }}" style="display:inline-flex;align-items:center;gap:10px;background:#FFFFFF;border:1px solid #DAE4EA;border-radius:999px;padding:6px 16px 6px 8px;min-height:44px;cursor:pointer;font-size:14.5px;font-weight:600;color:#0B1E3A">
+            <span style="{{ hideTrack }}"><span style="{{ hideKnob }}"></span></span>
+            Hide facilitator notes (safe to share screen)
+          </button>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="{{ pageStyle }}">
+        <sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ heroStyle }}">
+            <img src="assets/mark-outline.png" alt="" aria-hidden="true" style="position:absolute;right:-40px;top:50%;transform:translateY(-50%);height:150%;opacity:.12;pointer-events:none">
+            <div style="position:relative;color:#2DD4C8;font-weight:600;font-size:15px;margin-bottom:12px">UT Health San Antonio · 3 Days · 21 Learning Hours</div>
+            <h1 style="position:relative;color:#FFFFFF;font-size:clamp(30px,4vw,44px);line-height:1.1;letter-spacing:-.015em;margin:0 0 10px;font-weight:700;max-width:560px">Pre-Process Training Online Workbook</h1>
+            <div style="position:relative;color:#C9D4E0;font-size:18px;font-weight:600">{{ editionName }}</div>
+          </div>
+          <p style="margin:0 0 14px;font-size:19px;color:#0B1E3A;text-wrap:pretty">Use this workbook to learn how a hospital claim moves from billing to payment or denial, how to explain an open balance, and how to document an evidence-based next step.</p>
+          <p style="margin:0 0 14px;text-wrap:pretty">All account packets and deadlines in the exercises are fictional. Public payer examples are for recognition. Approved client references govern production ownership, deadlines, routing, and authority.</p>
+          <sc-if value="{{ isLearner }}" hint-placeholder-val="{{ true }}">
+            <p style="margin:0 0 28px;text-wrap:pretty">Follow the session code your facilitator posts in chat (for example <strong>1.3</strong>) using “Go to code” in the menu. Type your answers in the boxes; they save automatically on this device. Share fictional case evidence aloud or in chat as directed. At the end, download your completed workbook and submit it privately.</p>
+          </sc-if>
+          <sc-if value="{{ isFaci }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:0 0 28px;text-wrap:pretty">This edition mirrors the learner workbook page for page. Each lesson shows the learner page followed by facilitator pacing, prompts, and answer guidance. Learners see only their edition; release each day with an access code from the Access Codes page.</p>
+          </sc-if>
+
+          <sc-if value="{{ hasRegCard }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid #DAE4EA;border-radius:14px;padding:16px 20px;margin-bottom:28px">
+              <span style="flex:1 1 220px;display:flex;flex-direction:column"><span style="font-weight:700;color:#0B1E3A">{{ reg.name }}</span><span style="color:#5B6B80;font-size:15px">{{ reg.email }}</span></span>
+              <span style="font-size:14.5px;color:#0B1E3A;font-weight:600">Time invested: {{ timeLabel }}</span>
+              <button onClick="{{ editDetails }}" style="background:none;border:0;color:#0279A0;text-decoration:underline;cursor:pointer;min-height:44px;font-size:15px">Edit my details</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ notRegCard }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px;margin-bottom:32px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:14.5px;font-weight:600;color:#0B1E3A">Name
+              <input value="{{ name }}" onChange="{{ onName }}" placeholder="Your full name" style="min-height:48px;border:1px solid #DAE4EA;border-radius:10px;padding:0 14px;font-size:17px;font-weight:400;background:#FFFFFF;outline:none" style-focus="border-color:#05B4E0"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:14.5px;font-weight:600;color:#0B1E3A">Cohort
+              <input value="{{ cohort }}" onChange="{{ onCohort }}" placeholder="e.g. Batch 12 · November 2026" style="min-height:48px;border:1px solid #DAE4EA;border-radius:10px;padding:0 14px;font-size:17px;font-weight:400;background:#FFFFFF;outline:none" style-focus="border-color:#05B4E0"></label>
+          </div>
+          </sc-if>
+
+          <sc-if value="{{ showUnlock }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#EEF4F7;border-radius:14px;padding:26px;margin-bottom:34px">
+              <div style="font-size:20px;font-weight:700;color:#0B1E3A;margin-bottom:4px">Unlock a day</div>
+              <p style="margin:0 0 16px;color:#5B6B80;font-size:16px">Each day opens when your facilitator shares its access code.</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+                <input value="{{ code }}" onChange="{{ onCode }}" onKeyDown="{{ codeKey }}" placeholder="Enter access code, e.g. WORD-ABC" aria-label="Access code" style="flex:1 1 240px;min-height:48px;border:1px solid #DAE4EA;border-radius:999px;padding:0 20px;font-size:17px;background:#FFFFFF;letter-spacing:.06em;text-transform:uppercase;outline:none" style-focus="border-color:#05B4E0">
+                <button onClick="{{ submitCode }}" style="background:#05B4E0;color:#0B1E3A;border:0;border-radius:999px;padding:0 28px;min-height:48px;font-weight:700;cursor:pointer" style-hover="background:#2DD4C8">Unlock</button>
+              </div>
+              <sc-if value="{{ hasCodeMsg }}" hint-placeholder-val="{{ false }}"><div style="{{ codeMsgStyle }}">{{ codeMsg }}</div></sc-if>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px;margin-top:16px">
+                <sc-for list="{{ dayStatus }}" as="d" hint-placeholder-count="3">
+                  <button onClick="{{ d.go }}" style="text-align:left;background:#FFFFFF;border:1px solid #DAE4EA;border-radius:12px;padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:2px">
+                    <span style="font-weight:700;color:#0B1E3A">Day {{ d.n }}</span>
+                    <sc-if value="{{ d.open }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;font-weight:600;color:#0E5E3E">Open · {{ d.pct }} complete</span></sc-if>
+                    <sc-if value="{{ d.locked }}" hint-placeholder-val="{{ true }}"><span style="font-size:14px;font-weight:600;color:#8A97A8">Locked</span></sc-if>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <h2 style="font-size:22px;color:#0B1E3A;margin:0 0 14px;font-weight:700">What You Will Practice</h2>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
+            <sc-for list="{{ dayStatus }}" as="d" hint-placeholder-count="3">
+              <div style="display:flex;gap:18px;align-items:flex-start;padding:16px 18px;border:1px solid #DAE4EA;border-radius:12px">
+                <span style="flex:none;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#0B1E3A;color:#2DD4C8;font-weight:700;font-size:18px">{{ d.n }}</span>
+                <span style="display:flex;flex-direction:column"><span style="font-weight:700;color:#0B1E3A">{{ d.title }}</span><span style="color:#5B6B80">{{ d.q }}</span></span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:#FFF1D6;border-radius:12px;padding:16px 20px;color:#8A5300;font-size:16px;text-wrap:pretty"><strong>Scope:</strong> No Epic access or slides are required. Practice stops at research, classification, documentation, and recommending an approved next step. Do not correct charges, rebill, change claims, send appeals, or post financial transactions.</div>
+        </sc-if>
+
+        <sc-if value="{{ notWelcome }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-bottom:30px">
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+              <sc-if value="{{ hasCode }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;background:#0B1E3A;color:#2DD4C8;font-weight:700;font-size:15px;border-radius:999px;padding:4px 14px;letter-spacing:.02em">{{ pageCode }}</span></sc-if>
+              <span style="font-size:14.5px;color:#5B6B80;font-weight:600">{{ crumb }}</span>
+            </div>
+            <h1 style="font-size:clamp(28px,3.4vw,38px);font-weight:700;letter-spacing:-.01em;margin:0;color:#0B1E3A;line-height:1.15;text-wrap:balance">{{ pageTitle }}</h1>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isLocked }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#0B1E3A;border-radius:14px;padding:clamp(24px,4vw,40px);color:#FFFFFF;position:relative;overflow:hidden">
+            <img src="assets/mark-outline.png" alt="" aria-hidden="true" style="position:absolute;right:-30px;bottom:-60px;height:260px;opacity:.1;pointer-events:none">
+            <div style="position:relative;color:#2DD4C8;font-weight:600;font-size:15px;margin-bottom:8px">Day {{ lockDay }} is locked</div>
+            <div style="position:relative;font-size:24px;font-weight:700;margin-bottom:8px;max-width:520px">Enter the access code your facilitator shares in chat.</div>
+            <p style="position:relative;margin:0 0 20px;color:#A9B8C9;max-width:520px">Codes are released at the start of each day. Once unlocked, the day stays open on this device.</p>
+            <div style="position:relative;display:flex;gap:10px;flex-wrap:wrap;max-width:560px">
+              <input value="{{ code }}" onChange="{{ onCode }}" onKeyDown="{{ codeKey }}" placeholder="Access code" aria-label="Access code" style="flex:1 1 220px;min-height:48px;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:0 20px;font-size:17px;background:rgba(255,255,255,.06);color:#FFFFFF;letter-spacing:.06em;text-transform:uppercase;outline:none">
+              <button onClick="{{ submitCode }}" style="background:#05B4E0;color:#0B1E3A;border:0;border-radius:999px;padding:0 28px;min-height:48px;font-weight:700;cursor:pointer" style-hover="background:#2DD4C8">Unlock</button>
+            </div>
+            <sc-if value="{{ hasCodeMsg }}" hint-placeholder-val="{{ false }}"><div style="position:relative;margin-top:12px;font-weight:600;color:#FFB547">{{ codeMsg }}</div></sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isMap }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0 0 24px;color:#5B6B80">Your facilitator will post a session code in chat. Select a row to jump to it.</p>
+          <sc-for list="{{ mapDays }}" as="md" hint-placeholder-count="3">
+            <div style="margin-bottom:28px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px">
+                <h2 style="margin:0;font-size:21px;color:#0B1E3A;font-weight:700">Day {{ md.n }} · {{ md.title }}</h2>
+                <span style="font-size:14px;font-weight:700;color:#5B6B80">{{ md.state }}</span>
+              </div>
+              <div style="border:1px solid #DAE4EA;border-radius:12px;overflow:hidden">
+                <sc-for list="{{ md.rows }}" as="r" hint-placeholder-count="7">
+                  <button onClick="{{ r.go }}" style="display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;text-align:left;background:#FFFFFF;border:0;border-bottom:1px solid #EEF4F7;padding:12px 16px;cursor:pointer;min-height:52px" style-hover="background:#EEF4F7">
+                    <span style="font-weight:700;color:#0279A0">{{ r.code }}</span>
+                    <span style="color:#0B1E3A;font-weight:600">{{ r.title }}</span>
+                    <span style="font-size:14px;color:#5B6B80;white-space:nowrap">{{ r.meta }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </sc-if>
+
+        <sc-if value="{{ isCodes }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0 0 10px;text-wrap:pretty">Learners can’t open a day until they enter that day’s code. Pick any code below, or make your own, and post it in chat when you’re ready to start the day. Every code shown here works for every learner; a code only opens its own day.</p>
+          <p style="margin:0 0 26px;color:#5B6B80;font-size:16px">Learners enter codes on their Welcome page or on any locked page. Capitalisation and spaces don’t matter.</p>
+          <sc-for list="{{ codeDays }}" as="cdy" hint-placeholder-count="3">
+            <div style="border:1px solid #DAE4EA;border-radius:14px;padding:22px;margin-bottom:16px">
+              <div style="font-size:19px;font-weight:700;color:#0B1E3A;margin-bottom:2px">Day {{ cdy.n }}</div>
+              <div style="color:#5B6B80;font-size:15.5px;margin-bottom:14px">{{ cdy.title }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px">
+                <sc-for list="{{ cdy.codes }}" as="cc" hint-placeholder-count="5">
+                  <button onClick="{{ cc.copy }}" title="Copy code" style="display:inline-flex;align-items:center;gap:10px;background:#EEF4F7;border:1px solid #DAE4EA;border-radius:999px;padding:8px 10px 8px 18px;min-height:44px;cursor:pointer;font-weight:700;color:#0B1E3A;letter-spacing:.06em" style-hover="border-color:#05B4E0">
+                    {{ cc.code }}
+                    <span style="font-size:12.5px;letter-spacing:0;background:#FFFFFF;border-radius:999px;padding:3px 10px;color:#0279A0">{{ cc.label }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+          <div style="background:#0B1E3A;border-radius:14px;padding:26px;color:#FFFFFF;margin-top:24px">
+            <div style="font-size:19px;font-weight:700;margin-bottom:4px">Make your own code</div>
+            <p style="margin:0 0 16px;color:#A9B8C9;font-size:16px">Type any word (3–12 letters or numbers) and choose the day. The workbook adds three check letters so the code opens only that day.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px">
+              <input value="{{ cw }}" onChange="{{ onCw }}" placeholder="e.g. TEXAS" aria-label="Your word" style="flex:1 1 200px;min-height:46px;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:0 20px;font-size:17px;background:rgba(255,255,255,.06);color:#FFFFFF;letter-spacing:.06em;text-transform:uppercase;outline:none">
+              <div style="display:flex;gap:6px">
+                <sc-for list="{{ dayPills }}" as="dp" hint-placeholder-count="3">
+                  <button onClick="{{ dp.pick }}" style="{{ dp.st }}">Day {{ dp.n }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <sc-if value="{{ hasCustom }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <span style="font-size:28px;font-weight:700;letter-spacing:.08em;color:#2DD4C8">{{ customCode }}</span>
+                <button onClick="{{ copyCustom }}" style="background:#05B4E0;color:#0B1E3A;border:0;border-radius:999px;padding:0 22px;min-height:44px;font-weight:700;cursor:pointer">{{ customLabel }}</button>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isBlocks }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="6">
+              <sc-if value="{{ b.isFlow }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#0B1E3A;border-radius:16px;padding:22px 22px 24px;display:flex;flex-direction:column;gap:14px">
+                  <sc-if value="{{ b.hasTitle }}" hint-placeholder-val="{{ false }}"><div style="color:#2DD4C8;font-weight:700;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase">{{ b.title }}</div></sc-if>
+                  <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:stretch">
+                    <sc-for list="{{ b.steps }}" as="fs" hint-placeholder-count="4">
+                      <div style="display:flex;align-items:center;gap:10px;flex:1 1 140px;min-width:0">
+                        <div style="flex:1;min-width:0;align-self:stretch;background:#142B4F;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px">
+                          <span style="display:flex;align-items:center;gap:8px"><span style="flex:none;display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:linear-gradient(160deg,#2DD4C8,#05B4E0);color:#0B1E3A;font-weight:700;font-size:13px">{{ fs.n }}</span><span style="color:#FFFFFF;font-weight:700;font-size:15.5px;line-height:1.25">{{ fs.label }}</span></span>
+                          <sc-if value="{{ fs.hasSub }}" hint-placeholder-val="{{ true }}"><span style="color:#A9B8C9;font-size:14px;line-height:1.35">{{ fs.sub }}</span></sc-if>
+                        </div>
+                        <sc-if value="{{ fs.notLast }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="flex:none;color:#2DD4C8;font-weight:700;font-size:18px">→</span></sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isCompare }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <sc-if value="{{ b.hasTitle }}" hint-placeholder-val="{{ false }}"><div style="color:#5B6B80;font-weight:700;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase">{{ b.title }}</div></sc-if>
+                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px">
+                    <sc-for list="{{ b.cols }}" as="cc2" hint-placeholder-count="2">
+                      <div style="{{ cc2.st }}"><span style="font-weight:700;color:#0B1E3A;font-size:17px;line-height:1.25">{{ cc2.h }}</span><span style="color:#26384F;font-size:15.5px;line-height:1.45;text-wrap:pretty">{{ cc2.body }}</span></div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isChips }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#EEF4F7;border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+                  <div style="color:#5B6B80;font-weight:700;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase">{{ b.title }}</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ b.items }}" as="cp" hint-placeholder-count="5"><span style="display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;border:1px solid #DAE4EA;border-radius:999px;padding:6px 14px;font-weight:600;color:#0B1E3A;font-size:15px"><span style="display:block;width:5px;height:12px;background:#05B4E0;transform:skewY(-26deg);border-radius:1px"></span>{{ cp }}</span></sc-for>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isH }}" hint-placeholder-val="{{ false }}">
+                <h2 style="display:flex;align-items:center;gap:12px;margin:18px 0 0;font-size:21px;color:#0B1E3A;font-weight:700;line-height:1.25"><span style="flex:none;display:block;width:8px;height:22px;background:linear-gradient(160deg,#2DD4C8,#05B4E0);transform:skewY(-26deg);border-radius:2px"></span>{{ b.text }}</h2>
+              </sc-if>
+              <sc-if value="{{ b.isP }}" hint-placeholder-val="{{ false }}"><p style="margin:0;text-wrap:pretty">{{ b.text }}</p></sc-if>
+              <sc-if value="{{ b.isNote }}" hint-placeholder-val="{{ false }}"><div style="background:#E4F5F9;border-radius:12px;padding:14px 18px;color:#0B1E3A;font-size:16px;text-wrap:pretty">{{ b.text }}</div></sc-if>
+              <sc-if value="{{ b.isUl }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ b.items }}" as="li" hint-placeholder-count="3">
+                    <div style="display:flex;gap:12px;align-items:flex-start"><span style="flex:none;margin-top:6px;display:block;width:6px;height:14px;background:#05B4E0;transform:skewY(-26deg);border-radius:1px"></span><span style="text-wrap:pretty">{{ li }}</span></div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isTbl }}" hint-placeholder-val="{{ false }}">
+                <div style="overflow-x:auto;border:1px solid #DAE4EA;border-radius:12px">
+                  <table style="width:100%;border-collapse:collapse;font-size:15.5px;line-height:1.45;min-width:520px">
+                    <thead><tr>
+                      <sc-for list="{{ b.head }}" as="hd" hint-placeholder-count="2"><th style="text-align:left;background:#0B1E3A;color:#FFFFFF;font-weight:700;padding:11px 14px;font-size:14px;letter-spacing:.02em">{{ hd }}</th></sc-for>
+                    </tr></thead>
+                    <tbody>
+                      <sc-for list="{{ b.rows }}" as="r" hint-placeholder-count="4">
+                        <tr>
+                          <td style="padding:11px 14px;border-top:1px solid #DAE4EA;font-weight:700;color:#0B1E3A;vertical-align:top;background:#F6F9FB;min-width:120px">{{ r.k }}</td>
+                          <sc-for list="{{ r.rest }}" as="c" hint-placeholder-count="1"><td style="padding:11px 14px;border-top:1px solid #DAE4EA;vertical-align:top">{{ c }}</td></sc-for>
+                        </tr>
+                      </sc-for>
+                    </tbody>
+                  </table>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isQ }}" hint-placeholder-val="{{ false }}">
+                <label style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-weight:600;color:#0B1E3A;text-wrap:pretty">{{ b.text }}</span>
+                  <textarea rows="{{ b.n }}" value="{{ b.value }}" onChange="{{ b.onInput }}" placeholder="Type your answer…" style="width:100%;border:1px solid #DAE4EA;border-radius:10px;padding:12px 14px;font-size:16.5px;line-height:1.5;resize:vertical;background:#FBFDFE;outline:none" style-focus="border-color:#05B4E0;background:#FFFFFF"></textarea>
+                  <sc-if value="{{ b.hasAns }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:10px;align-items:flex-start;background:#D5F5E7;color:#0E5E3E;border-radius:10px;padding:10px 14px;font-size:16px;line-height:1.45"><span style="flex:none;background:#0E5E3E;color:#FFFFFF;font-weight:700;font-size:12.5px;letter-spacing:.04em;border-radius:999px;padding:2px 10px;margin-top:2px">ANSWER</span><span style="text-wrap:pretty">{{ b.ans }}</span></div></sc-if>
+                </label>
+              </sc-if>
+              <sc-if value="{{ b.isF }}" hint-placeholder-val="{{ false }}">
+                <label style="display:flex;flex-direction:column;gap:6px">
+                  <span style="font-weight:600;color:#0B1E3A;font-size:15.5px">{{ b.text }}</span>
+                  <input value="{{ b.value }}" onChange="{{ b.onInput }}" style="width:100%;min-height:46px;border:1px solid #DAE4EA;border-radius:10px;padding:0 14px;font-size:16.5px;background:#FBFDFE;outline:none" style-focus="border-color:#05B4E0;background:#FFFFFF">
+                </label>
+              </sc-if>
+              <sc-if value="{{ b.isDisc }}" hint-placeholder-val="{{ false }}">
+                <div style="border:1px dashed #B9CBD6;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;gap:12px;align-items:flex-start"><span style="flex:none;background:#ECE9FE;color:#4B3BB0;font-weight:700;font-size:13px;border-radius:999px;padding:3px 12px;margin-top:2px">Discuss</span><span style="font-weight:600;color:#0B1E3A;text-wrap:pretty">{{ b.text }}</span></div>
+                  <textarea rows="2" value="{{ b.value }}" onChange="{{ b.onInput }}" placeholder="My discussion notes (optional)" style="width:100%;border:1px solid #DAE4EA;border-radius:10px;padding:10px 14px;font-size:16px;resize:vertical;background:#FFFFFF;outline:none" style-focus="border-color:#05B4E0"></textarea>
+                  <sc-if value="{{ b.hasAns }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:10px;align-items:flex-start;background:#D5F5E7;color:#0E5E3E;border-radius:10px;padding:10px 14px;font-size:16px;line-height:1.45"><span style="flex:none;background:#0E5E3E;color:#FFFFFF;font-weight:700;font-size:12.5px;letter-spacing:.04em;border-radius:999px;padding:2px 10px;margin-top:2px">ANSWER</span><span style="text-wrap:pretty">{{ b.ans }}</span></div></sc-if>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isOrder }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div style="font-size:15.5px;color:#5B6B80">Select the cards in the order they happen. Select a card again to remove it.</div>
+                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px">
+                    <sc-for list="{{ b.cards }}" as="cd" hint-placeholder-count="6">
+                      <sc-if value="{{ cd.picked }}" hint-placeholder-val="{{ false }}">
+                        <button onClick="{{ cd.onClick }}" style="display:flex;gap:12px;align-items:flex-start;text-align:left;background:#E4F5F9;border:2px solid #05B4E0;border-radius:12px;padding:12px 14px;cursor:pointer;min-height:56px">
+                          <span style="flex:none;display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#0B1E3A;color:#2DD4C8;font-weight:700;font-size:15px">{{ cd.pos }}</span>
+                          <span><strong style="color:#0B1E3A">{{ cd.k }}.</strong> {{ cd.text }}</span>
+                        </button>
+                      </sc-if>
+                      <sc-if value="{{ cd.free }}" hint-placeholder-val="{{ true }}">
+                        <button onClick="{{ cd.onClick }}" style="display:flex;gap:12px;align-items:flex-start;text-align:left;background:#FFFFFF;border:2px solid #DAE4EA;border-radius:12px;padding:12px 14px;cursor:pointer;min-height:56px" style-hover="border-color:#05B4E0">
+                          <span style="flex:none;display:block;width:30px;height:30px;border-radius:50%;border:2px dashed #B9CBD6"></span>
+                          <span><strong style="color:#0B1E3A">{{ cd.k }}.</strong> {{ cd.text }}</span>
+                        </button>
+                      </sc-if>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#EEF4F7;border-radius:10px;padding:10px 14px">
+                    <span style="font-weight:700;color:#0B1E3A">My order:</span>
+                    <span style="letter-spacing:.04em">{{ b.seq }}</span>
+                    <button onClick="{{ b.onClear }}" style="margin-left:auto;background:none;border:0;color:#0279A0;text-decoration:underline;cursor:pointer;font-size:15px;min-height:36px">Clear</button>
+                  </div>
+                  <sc-if value="{{ b.hasAns }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:10px;align-items:flex-start;background:#D5F5E7;color:#0E5E3E;border-radius:10px;padding:10px 14px;font-size:16px;line-height:1.45"><span style="flex:none;background:#0E5E3E;color:#FFFFFF;font-weight:700;font-size:12.5px;letter-spacing:.04em;border-radius:999px;padding:2px 10px;margin-top:2px">ANSWER</span><span style="text-wrap:pretty">{{ b.ans }}</span></div></sc-if>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isCls }}" hint-placeholder-val="{{ false }}">
+                <div style="border:1px solid #DAE4EA;border-radius:12px;overflow:hidden">
+                  <div style="display:flex;gap:12px;background:#0B1E3A;color:#FFFFFF;font-size:14px;font-weight:700;padding:10px 14px;justify-content:space-between;flex-wrap:wrap"><span>{{ b.headL }}</span><span>{{ b.headR }}</span></div>
+                  <sc-for list="{{ b.rows }}" as="r" hint-placeholder-count="5">
+                    <div style="display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;padding:12px 14px;border-top:1px solid #DAE4EA">
+                      <span style="flex:none;min-width:34px;height:30px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#0B1E3A;color:#2DD4C8;font-weight:700;font-size:14px">{{ r.k }}</span>
+                      <sc-if value="{{ r.hasText }}" hint-placeholder-val="{{ true }}"><span style="flex:1 1 240px;font-size:15.5px;line-height:1.45">{{ r.text }}</span></sc-if>
+                      <sc-if value="{{ b.hasOptions }}" hint-placeholder-val="{{ false }}">
+                        <select value="{{ r.value }}" onChange="{{ r.onInput }}" style="flex:1 1 220px;min-height:44px;border:1px solid #DAE4EA;border-radius:10px;padding:0 12px;font-size:16px;background:#FBFDFE;cursor:pointer">
+                          <option value="">Choose…</option>
+                          <sc-for list="{{ b.options }}" as="o" hint-placeholder-count="4"><option value="{{ o }}">{{ o }}</option></sc-for>
+                        </select>
+                      </sc-if>
+                      <sc-if value="{{ b.freeText }}" hint-placeholder-val="{{ true }}">
+                        <input value="{{ r.value }}" onChange="{{ r.onInput }}" placeholder="Type here…" style="flex:2 1 260px;min-height:44px;border:1px solid #DAE4EA;border-radius:10px;padding:0 12px;font-size:16px;background:#FBFDFE;outline:none" style-focus="border-color:#05B4E0;background:#FFFFFF">
+                      </sc-if>
+                      <sc-if value="{{ r.hasAns }}" hint-placeholder-val="{{ false }}"><div style="flex:1 1 100%;display:flex;gap:10px;align-items:flex-start;background:#D5F5E7;color:#0E5E3E;border-radius:10px;padding:8px 12px;font-size:15.5px;line-height:1.4"><span style="flex:none;background:#0E5E3E;color:#FFFFFF;font-weight:700;font-size:12px;letter-spacing:.04em;border-radius:999px;padding:2px 9px;margin-top:1px">ANSWER</span><span>{{ r.ans }}</span></div></sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isChk }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ b.items }}" as="ck" hint-placeholder-count="4">
+                    <button onClick="{{ ck.onToggle }}" style="display:flex;gap:14px;align-items:center;text-align:left;background:#FFFFFF;border:1px solid #DAE4EA;border-radius:12px;padding:10px 14px;min-height:50px;cursor:pointer" style-hover="border-color:#05B4E0">
+                      <sc-if value="{{ ck.on }}" hint-placeholder-val="{{ false }}"><span style="flex:none;display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;background:#3DDC97;color:#0B1E3A;font-weight:700;font-size:16px">✓</span></sc-if>
+                      <sc-if value="{{ ck.off }}" hint-placeholder-val="{{ true }}"><span style="flex:none;display:block;width:26px;height:26px;border-radius:7px;border:2px solid #B9CBD6"></span></sc-if>
+                      <span>{{ ck.text }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isPick }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <span style="font-weight:600;color:#0B1E3A">{{ b.text }}</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ b.opts }}" as="po" hint-placeholder-count="6">
+                      <sc-if value="{{ po.on }}" hint-placeholder-val="{{ false }}"><button onClick="{{ po.pick }}" style="background:#0B1E3A;color:#FFFFFF;border:1px solid #0B1E3A;border-radius:999px;padding:8px 16px;min-height:44px;cursor:pointer;font-size:15.5px;font-weight:600">{{ po.text }}</button></sc-if>
+                      <sc-if value="{{ po.off }}" hint-placeholder-val="{{ true }}"><button onClick="{{ po.pick }}" style="background:#FFFFFF;color:#26384F;border:1px solid #DAE4EA;border-radius:999px;padding:8px 16px;min-height:44px;cursor:pointer;font-size:15.5px" style-hover="border-color:#05B4E0">{{ po.text }}</button></sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isWs }}" hint-placeholder-val="{{ false }}">
+                <div style="border:1px solid #DAE4EA;border-radius:12px;overflow:hidden">
+                  <div style="display:flex;gap:12px;background:#0B1E3A;color:#FFFFFF;font-size:14px;font-weight:700;padding:10px 14px;justify-content:space-between"><span>{{ b.headL }}</span><span>{{ b.headR }}</span></div>
+                  <sc-for list="{{ b.rows }}" as="wr" hint-placeholder-count="5">
+                    <label style="display:flex;flex-wrap:wrap;gap:8px 16px;padding:12px 14px;border-top:1px solid #DAE4EA">
+                      <span style="flex:1 1 200px;font-weight:700;color:#0B1E3A;font-size:15.5px">{{ wr.label }}</span>
+                      <textarea rows="2" value="{{ wr.value }}" onChange="{{ wr.onInput }}" style="flex:2 1 300px;border:1px solid #DAE4EA;border-radius:10px;padding:10px 12px;font-size:16px;resize:vertical;background:#FBFDFE;outline:none" style-focus="border-color:#05B4E0;background:#FFFFFF"></textarea>
+                    </label>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ b.isCoach }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:14px">
+                  <h2 style="display:flex;align-items:center;gap:12px;margin:8px 0 0;font-size:21px;color:#0B1E3A;font-weight:700"><span style="flex:none;display:block;width:8px;height:22px;background:#FFB547;transform:skewY(-26deg);border-radius:2px"></span>Learner Coaching Notes</h2>
+                  <sc-for list="{{ coach }}" as="ch" hint-placeholder-count="1">
+                    <div style="border:1px solid #DAE4EA;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px;background:#FBFDFE">
+                      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+                        <label style="flex:2 1 220px;display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:#0B1E3A">Learner Or Group<input value="{{ ch.name }}" onChange="{{ ch.onName }}" style="min-height:44px;border:1px solid #DAE4EA;border-radius:10px;padding:0 12px;font-size:16px;font-weight:400;background:#FFFFFF"></label>
+                        <label style="flex:0 1 110px;display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:#0B1E3A">Case A / 10<input type="number" min="0" max="10" value="{{ ch.a }}" onChange="{{ ch.onA }}" style="min-height:44px;border:1px solid #DAE4EA;border-radius:10px;padding:0 12px;font-size:16px;font-weight:400;background:#FFFFFF"></label>
+                        <label style="flex:0 1 110px;display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:#0B1E3A">Case B / 10<input type="number" min="0" max="10" value="{{ ch.b }}" onChange="{{ ch.onB }}" style="min-height:44px;border:1px solid #DAE4EA;border-radius:10px;padding:0 12px;font-size:16px;font-weight:400;background:#FFFFFF"></label>
+                        <div style="flex:0 0 auto;display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:#0B1E3A">Total<span style="min-height:44px;display:flex;align-items:center;padding:0 14px;border-radius:10px;background:#0B1E3A;color:#2DD4C8;font-size:17px;font-weight:700">{{ ch.total }} / 20</span></div>
+                      </div>
+                      <label style="display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:#0B1E3A">Demonstrated Strengths<textarea rows="2" value="{{ ch.str }}" onChange="{{ ch.onStr }}" style="border:1px solid #DAE4EA;border-radius:10px;padding:10px 12px;font-size:16px;font-weight:400;resize:vertical;background:#FFFFFF"></textarea></label>
+                      <label style="display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:#0B1E3A">Concepts To Practice Again<textarea rows="2" value="{{ ch.prac }}" onChange="{{ ch.onPrac }}" style="border:1px solid #DAE4EA;border-radius:10px;padding:10px 12px;font-size:16px;font-weight:400;resize:vertical;background:#FFFFFF"></textarea></label>
+                      <label style="display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:#0B1E3A">Coach And Follow-Up Plan<textarea rows="2" value="{{ ch.plan }}" onChange="{{ ch.onPlan }}" style="border:1px solid #DAE4EA;border-radius:10px;padding:10px 12px;font-size:16px;font-weight:400;resize:vertical;background:#FFFFFF"></textarea></label>
+                      <button onClick="{{ ch.remove }}" style="align-self:flex-end;background:none;border:0;color:#9B1B3F;text-decoration:underline;cursor:pointer;font-size:14.5px;min-height:36px">Remove this learner</button>
+                    </div>
+                  </sc-for>
+                  <button onClick="{{ addCoach }}" style="align-self:flex-start;background:#FFFFFF;border:1px solid #0B1E3A;color:#0B1E3A;border-radius:999px;padding:0 22px;min-height:44px;font-weight:700;cursor:pointer" style-hover="background:#EEF4F7">+ Add learner</button>
+                </div>
+              </sc-if>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ showGuide }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:40px;border-radius:16px;overflow:hidden;border:1px solid #0B1E3A">
+              <div style="background:#0B1E3A;color:#FFFFFF;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+                <div style="display:flex;align-items:center;gap:12px"><span style="display:block;width:8px;height:22px;background:#FFB547;transform:skewY(-26deg);border-radius:2px"></span><span style="font-weight:700;font-size:18px">Facilitator Teaching Guide</span></div>
+                <span style="color:#2DD4C8;font-weight:600;font-size:14.5px">{{ guideMeta }}</span>
+              </div>
+              <div style="padding:22px;display:flex;flex-direction:column;gap:18px;background:#FFFFFF">
+                <div style="display:flex;flex-direction:column">
+                  <sc-for list="{{ guideTime }}" as="gt" hint-placeholder-count="5">
+                    <div style="display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px;padding:12px 0;border-bottom:1px solid #EEF4F7;align-items:start">
+                      <span style="display:inline-flex;justify-content:center;background:#FFF1D6;color:#8A5300;font-weight:700;border-radius:999px;padding:3px 0;font-size:14.5px">{{ gt.m }} min</span>
+                      <span style="font-size:16px;text-wrap:pretty">{{ gt.text }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <sc-for list="{{ guideParts }}" as="gp" hint-placeholder-count="2">
+                  <div style="background:#EEF4F7;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+                    <div style="font-weight:700;color:#0B1E3A;font-size:16.5px">{{ gp.h }}</div>
+                    <sc-for list="{{ gp.paras }}" as="pp" hint-placeholder-count="1"><p style="margin:0;font-size:16px;text-wrap:pretty">{{ pp }}</p></sc-for>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ hasReveal }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:40px;display:flex;flex-direction:column;gap:16px">
+            
+            <sc-if value="{{ revealOn }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:16px">
+                <sc-if value="{{ hasKey }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#0B1E3A;border-radius:16px;padding:26px 28px;color:#FFFFFF;display:flex;flex-direction:column;gap:14px">
+                    <div style="color:#2DD4C8;font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase">Answer Key</div>
+                    <sc-for list="{{ keyItems }}" as="ki" hint-placeholder-count="1">
+                      <div style="display:flex;flex-direction:column;gap:8px">
+                        <div style="font-weight:700;font-size:17px">{{ ki.h }}</div>
+                        <sc-for list="{{ ki.paras }}" as="kp" hint-placeholder-count="2"><p style="margin:0;color:#E4EEF5;text-wrap:pretty">{{ kp }}</p></sc-for>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ hasTake }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#D5F5E7;border-radius:16px;padding:22px 26px;display:flex;flex-direction:column;gap:12px">
+                    <div style="color:#0E5E3E;font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase">Key Takeaways</div>
+                    <sc-for list="{{ takeItems }}" as="ti" hint-placeholder-count="1">
+                      <div style="display:flex;flex-direction:column;gap:6px">
+                        <div style="font-weight:700;color:#0B1E3A">{{ ti.h }}</div>
+                        <sc-for list="{{ ti.paras }}" as="tp" hint-placeholder-count="1"><p style="margin:0;color:#0B1E3A;text-wrap:pretty">{{ tp }}</p></sc-for>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isDownload }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0 0 22px;text-wrap:pretty">{{ downloadIntro }}</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px;margin-bottom:28px">
+            <sc-for list="{{ summary }}" as="sm" hint-placeholder-count="3">
+              <div style="border:1px solid #DAE4EA;border-radius:12px;padding:16px">
+                <div style="font-weight:700;color:#0B1E3A">{{ sm.label }}</div>
+                <div style="font-size:28px;font-weight:700;color:#0279A0;line-height:1.2;margin:4px 0">{{ sm.pct }}</div>
+                <div style="font-size:14px;color:#5B6B80">{{ sm.detail }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ missingName }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#FDE2E9;color:#9B1B3F;border-radius:12px;padding:14px 18px;margin-bottom:18px;font-weight:600">Add your name on the Welcome page so your workbook is labelled correctly.</div>
+          </sc-if>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px">
+            <button onClick="{{ onPdf }}" style="background:#05B4E0;color:#0B1E3A;border:0;border-radius:999px;padding:0 28px;min-height:50px;font-weight:700;cursor:pointer;font-size:17px" style-hover="background:#2DD4C8">Download as PDF</button>
+            <button onClick="{{ onDoc }}" style="background:#0B1E3A;color:#FFFFFF;border:0;border-radius:999px;padding:0 28px;min-height:50px;font-weight:700;cursor:pointer;font-size:17px" style-hover="background:#142B4F">Download as Word</button>
+          </div>
+          <p style="margin:0 0 32px;color:#5B6B80;font-size:15px">PDF opens your browser’s print window: choose “Save as PDF” as the destination, then Save.</p>
+          <div style="border-top:1px solid #DAE4EA;padding-top:22px">
+            <div style="font-weight:700;color:#0B1E3A;margin-bottom:4px">Moving to another computer?</div>
+            <p style="margin:0 0 14px;color:#5B6B80;font-size:16px">Save a backup file here, then open it in the workbook on the other computer to continue.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+              <button onClick="{{ onBackup }}" style="background:#FFFFFF;border:1px solid #0B1E3A;color:#0B1E3A;border-radius:999px;padding:0 22px;min-height:44px;font-weight:700;cursor:pointer" style-hover="background:#EEF4F7">Save backup file</button>
+              <label style="display:inline-flex;align-items:center;background:#FFFFFF;border:1px solid #0B1E3A;color:#0B1E3A;border-radius:999px;padding:0 22px;min-height:44px;font-weight:700;cursor:pointer">Open backup file<input type="file" accept=".json,application/json" onChange="{{ onRestore }}" style="display:none"></label>
+              <sc-if value="{{ hasRestoreMsg }}" hint-placeholder-val="{{ false }}"><span style="font-weight:600;color:#0E5E3E">{{ restoreMsg }}</span></sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ hasFooter }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:44px;padding-top:22px;border-top:1px solid #DAE4EA">
+            <sc-if value="{{ hasPrev }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ goPrev }}" style="background:#FFFFFF;border:1px solid #DAE4EA;color:#0B1E3A;border-radius:999px;padding:0 22px;min-height:46px;font-weight:700;cursor:pointer" style-hover="border-color:#0B1E3A">← Back</button>
+            </sc-if>
+            <span style="flex:1"></span>
+            <sc-if value="{{ hasNext }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ goNext }}" style="background:#05B4E0;color:#0B1E3A;border:0;border-radius:999px;padding:0 24px;min-height:46px;font-weight:700;cursor:pointer;text-align:left" style-hover="background:#2DD4C8">Next: {{ nextLabel }} →</button>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+    </main>
+    <sc-if value="{{ isPresent }}" hint-placeholder-val="{{ false }}">
+      <div style="position:fixed;right:14px;bottom:14px;z-index:50;display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.85);border:1px solid #DAE4EA;border-radius:999px;padding:3px;opacity:.45;transition:opacity .2s" style-hover="opacity:1">
+        <button onClick="{{ toggleReveal2 }}" title="Reveal or hide the answer key" style="display:inline-flex;align-items:center;gap:6px;background:transparent;color:#5B6B80;border:0;border-radius:999px;padding:0 10px;min-height:30px;font-weight:600;cursor:pointer;font-size:12.5px" style-hover="color:#0B1E3A;background:#EEF4F7"><span style="{{ revealDot }}"></span>{{ revealBtn }}</button>
+        <sc-if value="{{ notNarrow }}" hint-placeholder-val="{{ true }}"><span style="width:1px;height:14px;background:#DAE4EA"></span><button onClick="{{ toggleSideNav }}" title="Show or hide the menu" style="background:transparent;color:#5B6B80;border:0;border-radius:999px;padding:0 10px;min-height:30px;font-weight:600;cursor:pointer;font-size:12.5px" style-hover="color:#0B1E3A;background:#EEF4F7">{{ navBtn }}</button></sc-if>
+      </div>
+    </sc-if>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { ready: false, role: null, cur: 'welcome', navOpen: false, narrow: false,
+    data: { learner: { a: {}, p: {}, u: {} }, faci: { a: {}, p: {}, coach: [{}], hide: false }, present: { a: {}, p: {} } },
+    code: '', codeMsg: '', codeOk: false, pass: '', passMsg: '', jump: '', jumpMsg: '', cw: '', cd: 1, copied: '', restoreMsg: '' };
+
+  componentDidMount() {
+    const boot = () => {
+      if (!window.ARD_WORKBOOK) { this._t = setTimeout(boot, 60); return; }
+      this.W = window.ARD_WORKBOOK;
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem(this.W.storeKey) || 'null'); } catch (e) {}
+      const next = { ready: true };
+      if (saved) {
+        const d = this.state.data;
+        next.data = { learner: { ...d.learner, ...(saved.data && saved.data.learner) }, faci: { ...d.faci, ...(saved.data && saved.data.faci) }, present: { ...d.present, ...(saved.data && saved.data.present) } };
+        if (saved.role) next.role = saved.role;
+        if (saved.cur) next.cur = saved.cur;
+      }
+      this.setState(next);
+    };
+    boot();
+    this.onResize = () => { const n = window.innerWidth < 900; if (n !== this.state.narrow) this.setState({ narrow: n, navOpen: false }); };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+    this.onHide = () => { if (document.visibilityState === 'hidden') { this.flushTime(); if (this._sync) { clearTimeout(this._sync); this._sync = null; } setTimeout(() => this.sendSync('autosave'), 50); } };
+    document.addEventListener('visibilitychange', this.onHide);
+    this._lastAct = Date.now();
+    this.onAct = () => { this._lastAct = Date.now(); };
+    ['mousemove', 'mousedown', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach(ev => window.addEventListener(ev, this.onAct, { passive: true, capture: true }));
+    this._tick = setInterval(() => this.tick(), 1000);
+    this.onUnload = () => { this.flushTime(); };
+    window.addEventListener('pagehide', this.onUnload);
+    this._sessT = setTimeout(() => { if (this.state.role === 'learner' && this.lbox().reg) { this.setL(b => ({ ...b, sessions: (b.sessions || 0) + 1 })); this.logEvent('session', 'Opened workbook'); } }, 1500);
+  }
+  componentWillUnmount() { clearInterval(this._tick); clearTimeout(this._sessT); this.stopFlash(); window.removeEventListener('pagehide', this.onUnload); ['mousemove', 'mousedown', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach(ev => window.removeEventListener(ev, this.onAct, { capture: true })); clearTimeout(this._sync); window.removeEventListener('resize', this.onResize); clearTimeout(this._t); clearTimeout(this._s); }
+
+  persist() {
+    clearTimeout(this._s);
+    this._s = setTimeout(() => {
+      if (!this.W) return;
+      const { role, cur, data } = this.state;
+      try { localStorage.setItem(this.W.storeKey, JSON.stringify({ role, cur, data })); } catch (e) {}
+      this.queueSync('autosave');
+    }, 250);
+  }
+  today() { const n = new Date(); return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0'); }
+  lbox() { return this.state.data.learner; }
+  setL(fn, cb) { this.setState(s => ({ data: { ...s.data, learner: fn(s.data.learner) } }), () => { this.persist(); cb && cb(); }); }
+  logEvent(event, label, detail) { this.queueSync(event, label, detail); }
+  score(a) {
+    const K = this.W.scoreKeys || {}; let c = 0, n = 0; const by = {};
+    Object.keys(K).forEach(k => { n++; const act = k.split('.').slice(0, 2).join('.'); by[act] = by[act] || [0, 0]; by[act][1]++; const v = String(a[k] || ''); if (v && v === K[k]) { c++; by[act][0]++; } });
+    return { c, n, by };
+  }
+  queueSync(event, label, detail) {
+    if (!this.W || !this.W.sheetUrl) return;
+    if (this.state.role === 'faci' && event === 'coach') { clearTimeout(this._coach); this._coach = setTimeout(() => this.sendCoach(), 4000); return; }
+    if (this.state.role !== 'learner' || !this.lbox().reg) return;
+    if (event !== 'autosave' && event !== 'heartbeat') { this.sendSync(event, label, detail); return; }
+    clearTimeout(this._sync);
+    this._sync = setTimeout(() => { this._sync = null; this.sendSync(event); }, 8000);
+  }
+  post(body) { try { fetch(this.W.sheetUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body), keepalive: true }).catch(() => {}); } catch (e) {} }
+  sendCoach() {
+    const f = this.state.data.faci;
+    this.post({ type: 'coach', facilitator: (f.p && f.p.name) || '', rows: (f.coach || []).map(c => ({ name: c.name || '', a: c.a || '', b: c.b || '', str: c.str || '', prac: c.prac || '', plan: c.plan || '' })) });
+  }
+  sendSync(event, label, detail) {
+    try {
+      const box = this.lbox(), a = box.a, reg = box.reg || {}, tm = box.t || {};
+      const pages = this.pagesFor('learner').filter(p => p.day);
+      const days = {}; let td = 0, tt = 0;
+      [1, 2, 3].forEach(n => { let x = 0, y = 0; pages.filter(p => p.day === n).forEach(p => { const c = this.countPage(p, a); x += c[0]; y += c[1]; }); td += x; tt += y; days[n] = box.u[n] ? this.pct(x, y) / 100 : 'Locked'; });
+      const sc = this.score(a), overall = this.pct(td, tt);
+      const cur = this.W.pages.find(p => p.id === this.state.cur);
+      const H = s => (s || 0) / 86400, HF = '[h]:mm', P = '0%', D = 'mmm d, yyyy h:mm am/pm';
+      const scLabel = { '1.1.order': '1.1 Event Order', '1.3.sort': '1.3 Payer Cards', '1.5.tl': '1.5 Claim Timelines', '2.1.sort': '2.1 Evidence Sort' };
+      const cols = [
+        { h: 'Last Seen', v: new Date().toISOString(), date: 1, f: D },
+        { h: 'Status', v: '' },
+        { h: 'Full Name', v: reg.name || '' },
+        { h: 'HRC Email', v: (reg.email || '').toLowerCase() },
+        { h: 'Employee ID', v: reg.emp || '' },
+        { h: 'Cohort / Batch', v: reg.cohort || '' },
+        { h: 'Team / LOB', v: reg.team || '' },
+        { h: 'Supervisor', v: reg.sup || '' },
+        { h: 'Registered', v: reg.at || '', date: 1, f: D },
+        { h: 'Hours Invested (Total)', v: H(tm.total), f: HF },
+        { h: 'Hours Today', v: H((tm.byDate || {})[this.today()]), f: HF },
+        { h: 'Hours On Day 1', v: H(tm.d1), f: HF },
+        { h: 'Hours On Day 2', v: H(tm.d2), f: HF },
+        { h: 'Hours On Day 3', v: H(tm.d3), f: HF },
+        { h: 'Sessions', v: box.sessions || 0 },
+        { h: 'Away / Idle Prompts', v: (box.away || 0) + (box.idlePrompts || 0) },
+        { h: 'Overall Completion', v: overall / 100, f: P },
+        { h: 'Day 1 Completion', v: days[1], f: P },
+        { h: 'Day 2 Completion', v: days[2], f: P },
+        { h: 'Day 3 Completion', v: days[3], f: P },
+        { h: 'Answers Completed', v: td + ' of ' + tt },
+        { h: 'Knowledge Check Score', v: sc.n ? sc.c / sc.n : '', f: P },
+        { h: 'Knowledge Check (Correct)', v: sc.c + ' of ' + sc.n }
+      ].concat(Object.keys(sc.by).map(k => ({ h: 'Score · ' + (scLabel[k] || k), v: sc.by[k][0] + ' / ' + sc.by[k][1] })))
+       .concat([
+        { h: 'Capstone Self-Check', v: [0, 1, 2, 3, 4].filter(i => a['3.6.self.' + i]).length + ' of 5' },
+        { h: 'Days Unlocked', v: [1, 2, 3].filter(n => box.u[n]).map(n => 'Day ' + n).join(', ') },
+        { h: 'Day 1 Unlocked At', v: (box.unlockAt || {})[1] || '', date: 1, f: D, keep: 1 },
+        { h: 'Day 2 Unlocked At', v: (box.unlockAt || {})[2] || '', date: 1, f: D, keep: 1 },
+        { h: 'Day 3 Unlocked At', v: (box.unlockAt || {})[3] || '', date: 1, f: D, keep: 1 },
+        { h: 'Pages Visited', v: Object.keys(box.visited || {}).length + ' of ' + this.pagesFor('learner').length },
+        { h: 'Current Page', v: cur ? (cur.day ? cur.id + ' ' : '') + cur.title : '' },
+        { h: 'Last Download', v: box.lastDl || '', date: 1, f: D, keep: 1 }
+      ]).concat(pages.map(p => { const c = this.countPage(p, a); return { h: p.id + ' ' + p.title, v: box.u[p.day] ? (c[1] ? c[0] / c[1] : 1) : 'Locked', f: P }; }));
+      this.post({ type: 'learner', event: event || 'autosave', eventLabel: label || event, detail: detail || '', name: reg.name || '', email: (reg.email || '').toLowerCase(), cohort: reg.cohort || '', overall, seconds: tm.total || 0, cols });
+    } catch (e) {}
+  }
+  flushTime() {
+    const acc = this._acc || {}; this._acc = {};
+    const sum = Object.values(acc).reduce((x, y) => x + y, 0); if (!sum) return;
+    const day = this.today();
+    this.setL(b => { const t0 = b.t || {}; const t1 = { ...t0, byDate: { ...(t0.byDate || {}) } }; t1.total = (t1.total || 0) + sum; t1.byDate[day] = (t1.byDate[day] || 0) + sum; Object.keys(acc).forEach(k => { t1[k] = (t1[k] || 0) + acc[k]; }); return { ...b, t: t1 }; });
+  }
+  tick() {
+    const s = this.state;
+    if (!this.W || s.role !== 'learner' || !this.lbox().reg) { this.stopFlash(); return; }
+    const now = Date.now(), vis = document.visibilityState === 'visible';
+    const AWAY = 3 * 60000, IDLE = 5 * 60000, COUNT = 3 * 60000;
+    if (!vis) { if (!this._hiddenAt) this._hiddenAt = now; if (now - this._hiddenAt > AWAY) this.startFlash(); return; }
+    if (this._hiddenAt) {
+      const away = now - this._hiddenAt; this._hiddenAt = 0; this.stopFlash();
+      if (away >= AWAY) {
+        const m = Math.round(away / 60000);
+        this.setState({ idle: true, idleMsg: 'You were away from the workbook for about ' + m + ' minute' + (m === 1 ? '' : 's') + '. That time was not counted.' });
+        this.setL(b => ({ ...b, away: (b.away || 0) + 1, sessions: away > 30 * 60000 ? (b.sessions || 0) + 1 : (b.sessions || 0) }));
+        this.logEvent('away', 'Returned after being away', m + ' min');
+        this._lastAct = now; return;
+      }
+    }
+    if (s.idle) return;
+    if (now - (this._lastAct || now) > IDLE) {
+      this.setState({ idle: true, idleMsg: 'We haven’t seen any activity for 5 minutes. Your time is paused until you confirm.' });
+      this.setL(b => ({ ...b, idlePrompts: (b.idlePrompts || 0) + 1 }));
+      this.logEvent('idle', 'Idle prompt shown', '5 min without activity');
+      this.startFlash(); return;
+    }
+    if (now - (this._lastAct || now) <= COUNT) {
+      const pg = this.W.pages.find(p => p.id === s.cur), k = pg && pg.day ? 'd' + pg.day : 'other';
+      this._acc = this._acc || {}; this._acc[k] = (this._acc[k] || 0) + 1;
+      this._beat = (this._beat || 0) + 1;
+      if (this._beat % 30 === 0) this.flushTime();
+      if (this._beat % 120 === 0) this.queueSync('heartbeat');
+    }
+  }
+  startFlash() {
+    if (this._flash) return; this._title = this._title || document.title; let on = false;
+    this._flash = setInterval(() => { on = !on; document.title = on ? 'Are you still there?' : this._title; }, 1500);
+  }
+  stopFlash() { if (this._flash) { clearInterval(this._flash); this._flash = null; if (this._title) document.title = this._title; } }
+  confirmHere() {
+    this.stopFlash(); this._lastAct = Date.now();
+    const wasIdle = /activity/.test(this.state.idleMsg || '');
+    this.setState({ idle: false, idleMsg: '' });
+    if (wasIdle) this.logEvent('present', 'Confirmed still here', 'After idle prompt');
+  }
+  register() {
+    const f = this.state.reg || {}, W = this.W;
+    const name = String(f.name || '').trim().replace(/\s+/g, ' '), email = String(f.email || '').trim().toLowerCase();
+    if (name.split(' ').length < 2) { this.setState({ regMsg: 'Please enter your full name (first and last).' }); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { this.setState({ regMsg: 'Please enter a valid HRC email address.' }); return; }
+    const doms = W.emailDomains || [];
+    if (doms.length && !doms.some(dm => email.endsWith(dm.toLowerCase()))) { this.setState({ regMsg: 'Please use your HRC email (' + doms.join(' or ') + ').' }); return; }
+    const old = this.lbox().reg;
+    const reg = { name, email, emp: String(f.emp || '').trim(), cohort: String(f.cohort || '').trim(), team: String(f.team || '').trim(), sup: String(f.sup || '').trim(), at: (old && old.at) || new Date().toISOString() };
+    this.setState({ regMsg: '', editReg: false, reg: null });
+    this.setL(b => ({ ...b, reg, p: { ...(b.p || {}), name, cohort: reg.cohort }, sessions: old ? (b.sessions || 1) : 1 }), () => this.logEvent(old ? 'update' : 'register', old ? 'Updated details' : 'Registered', reg.email));
+    this._lastAct = Date.now();
+  }
+  markDl(label) { if (this.state.role !== 'learner') return; this.setL(b => ({ ...b, lastDl: new Date().toISOString() }), () => this.logEvent('download', label)); }
+  fmtTime(sec) { sec = sec || 0; const h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60); return h ? h + 'h ' + m + 'm' : m + 'm'; }
+  checkDayDone() {
+    const b = this.lbox(); const done = { ...(b.dayDone || {}) }; let changed = false;
+    [1, 2, 3].forEach(n => { if (done[n] || !b.u[n]) return; let x = 0, y = 0; this.pagesFor('learner').filter(p => p.day === n).forEach(p => { const c = this.countPage(p, b.a); x += c[0]; y += c[1]; }); if (y && x === y) { done[n] = 1; changed = true; this.logEvent('daydone', 'Completed all Day ' + n + ' answers'); } });
+    if (changed) this.setL(bb => ({ ...bb, dayDone: done }));
+  }
+  upd(fn) { this.setState(s => { const r = s.role; const box = s.data[r]; return { data: { ...s.data, [r]: fn(box) } }; }, () => this.persist()); }
+  setAns(id, v) { this.upd(b => ({ ...b, a: { ...b.a, [id]: v } })); if (this.state.role === 'learner') { clearTimeout(this._dc); this._dc = setTimeout(() => this.checkDayDone(), 1500); } }
+
+  chk(day, word) {
+    let h = 2166136261; const s = 'ard|' + day + '|' + word + '|hrc-uth';
+    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+    const A = 'ACDEFGHJKMNPQRTUVWXY34679'; let o = '';
+    for (let i = 0; i < 3; i++) { o += A[h % 25]; h = Math.floor(h / 25); }
+    return o;
+  }
+  makeCode(day, word) { const w = String(word || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); return w.length >= 3 ? w + '-' + this.chk(day, w) : ''; }
+  readCode(raw) {
+    const c = String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (c.length < 6) return 0;
+    const w = c.slice(0, -3), k = c.slice(-3);
+    for (let d = 1; d <= 3; d++) if (this.chk(d, w) === k) return d;
+    return 0;
+  }
+  submitCode() {
+    const d = this.readCode(this.state.code); this.setState({ lastCode: String(this.state.code || '').toUpperCase() });
+    if (!d) { this.setState({ codeMsg: 'That code didn’t work. Check the spelling with your facilitator’s post in chat.', codeOk: false }); return; }
+    this.setState(s => ({ code: '', codeOk: true, codeMsg: 'Day ' + d + ' is now open.', data: { ...s.data, learner: { ...s.data.learner, u: { ...s.data.learner.u, [d]: true }, unlockAt: { ...(s.data.learner.unlockAt || {}), [d]: (s.data.learner.unlockAt || {})[d] || new Date().toISOString() } } } }), () => { this.persist(); this.queueSync('unlock', 'Unlocked Day ' + d, 'Code ' + this.state.lastCode); });
+  }
+
+  pagesFor(role) { return this.W.pages.filter(p => role === 'faci' || !p.faciOnly); }
+  isOpen(day) { return !day || this.state.role === 'faci' || this.state.role === 'present' || !!this.state.data.learner.u[day]; }
+  go(id) { if (this.state.role === 'learner' && this.lbox().reg && !(this.lbox().visited || {})[id]) this.setL(b => ({ ...b, visited: { ...(b.visited || {}), [id]: 1 } })); this.setState({ cur: id, navOpen: false, codeMsg: '', jumpMsg: '', reveal: false }, () => { this.persist(); window.scrollTo(0, 0); }); }
+
+  countPage(p, a) {
+    let done = 0, total = 0; const f = v => { total++; if (v !== undefined && v !== null && String(v).trim() !== '' && v !== false) done++; };
+    (p.blocks || []).forEach(b => {
+      if (b.t === 'q' || b.t === 'f' || b.t === 'order' || b.t === 'pick') f(a[b.id]);
+      else if (b.t === 'cls') b.rows.forEach(r => f(a[b.id + '.' + r[0]]));
+      else if (b.t === 'ws') b.rows.forEach((r, i) => f(a[b.id + '.' + i]));
+      else if (b.t === 'chk') { total++; if (b.items.some((x, i) => a[b.id + '.' + i])) done++; }
+    });
+    return [done, total];
+  }
+  pct(d, t) { return t ? Math.round(d / t * 100) : 0; }
+
+  copy(text, tag) {
+    const ok = () => { this.setState({ copied: tag }); clearTimeout(this._c); this._c = setTimeout(() => this.setState({ copied: '' }), 1600); };
+    try { navigator.clipboard.writeText(text).then(ok, () => { this.fallbackCopy(text); ok(); }); } catch (e) { this.fallbackCopy(text); ok(); }
+  }
+  fallbackCopy(t) { const x = document.createElement('textarea'); x.value = t; document.body.appendChild(x); x.select(); try { document.execCommand('copy'); } catch (e) {} x.remove(); }
+
+  esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>'); }
+  buildReport() {
+    const W = this.W, role = this.state.role, box = this.state.data[role], a = box.a, e = s => this.esc(s);
+    const faci = role === 'faci', hide = faci && box.hide;
+    const name = (box.p && box.p.name) || '', cohort = (box.p && box.p.cohort) || '';
+    const KK = (faci && !hide) ? (W.keys || {}) : {}; const key = id => KK[id] ? '<div class="key"><b>Answer key:</b> ' + e(KK[id]) + '</div>' : '';
+    const ans = v => (v && String(v).trim()) ? '<div class="ans">' + e(v) + '</div>' : '<div class="ans empty">Not answered</div>';
+    const tbl = (head, rows) => '<table><tr>' + head.map(h => '<th>' + e(h) + '</th>').join('') + '</tr>' + rows.map(r => '<tr>' + r.map((c, i) => '<td' + (i ? '' : ' class="k"') + '>' + e(c) + '</td>').join('') + '</tr>').join('') + '</table>';
+    let body = '';
+    const pages = this.pagesFor(role).filter(p => p.blocks && this.isOpen(p.day));
+    pages.forEach(p => {
+      const code = p.day ? p.id : '';
+      const lpn = this.learnerPageNo(p.id);
+      body += '<section><div class="crumb">' + (lpn ? 'Page ' + lpn + ' · ' : '') + (p.day ? 'Day ' + p.day + ' · ' + e(code) + ' · ' : '') + e(p.kind) + (typeof p.minutes === 'number' ? ' · ' + p.minutes + ' min' : '') + '</div><h1>' + e(p.title) + '</h1>';
+      p.blocks.forEach(b => {
+        if (b.t === 'h') body += '<h2>' + e(b.text) + '</h2>';
+        else if (b.t === 'p') body += '<p>' + e(b.text) + '</p>';
+        else if (b.t === 'note') body += '<p class="note">' + e(b.text) + '</p>';
+        else if (b.t === 'ul') body += '<ul>' + b.items.map(x => '<li>' + e(x) + '</li>').join('') + '</ul>';
+        else if (b.t === 'tbl') body += tbl(b.head, b.rows);
+        else if (b.t === 'q' || b.t === 'f') body += '<div class="q">' + e(b.text || b.label) + '</div>' + ans(a[b.id]) + key(b.id);
+        else if (b.t === 'flow') body += (b.title ? '<h3>' + e(b.title) + '</h3>' : '') + '<p class="note">' + b.steps.map((x, j) => (j + 1) + '. <b>' + e(x[0]) + '</b>' + (x[1] ? ' – ' + e(x[1]) : '')).join(' &nbsp;→&nbsp; ') + '</p>';
+        else if (b.t === 'compare') body += (b.title ? '<h3>' + e(b.title) + '</h3>' : '') + tbl(b.cols.map(c => c[0]), [b.cols.map(c => c[1])]).replace(/ class="k"/g, '');
+        else if (b.t === 'chips') body += '<p class="note"><b>' + e(b.title) + ':</b> ' + b.items.map(e).join(' · ') + '</p>';
+        else if (b.t === 'disc') body += '<div class="q"><span class="tag">Discuss</span> ' + e(b.text) + '</div>' + (a[b.id] ? ans(a[b.id]) : '');
+        else if (b.t === 'order') body += '<table>' + b.cards.map(c => '<tr><td class="k">' + c[0] + '</td><td>' + e(c[1]) + '</td></tr>').join('') + '</table><div class="q">My order</div>' + ans((a[b.id] || '').split(',').filter(Boolean).join(' → ')) + key(b.id);
+        else if (b.t === 'cls') { const hasT = b.rows.some(r => r[1]); body += '<table><tr><th>' + e(b.head[0]) + '</th>' + (hasT ? '<th>' + e(b.head.length > 2 ? b.head[1] : '') + '</th>' : '') + '<th>' + e(b.head[b.head.length - 1]) + '</th></tr>' + b.rows.map(r => { const v = a[b.id + '.' + r[0]]; return '<tr><td class="k">' + e(r[0]) + '</td>' + (hasT ? '<td>' + e(r[1]) + '</td>' : '') + '<td class="a">' + (v ? e(v) : '<span class="empty">—</span>') + (KK[b.id + '.' + r[0]] ? '<div class="key">' + e(KK[b.id + '.' + r[0]]) + '</div>' : '') + '</td></tr>'; }).join('') + '</table>'; }
+        else if (b.t === 'ws') body += '<table><tr><th>' + e(b.head[0]) + '</th><th>' + e(b.head[1]) + '</th></tr>' + b.rows.map((r, i) => { const v = a[b.id + '.' + i]; return '<tr><td class="k">' + e(r) + '</td><td class="a">' + (v ? e(v) : '<span class="empty">—</span>') + '</td></tr>'; }).join('') + '</table>';
+        else if (b.t === 'chk') body += '<ul class="chk">' + b.items.map((x, i) => '<li>' + (a[b.id + '.' + i] ? '☑' : '☐') + ' ' + e(x) + '</li>').join('') + '</ul>';
+        else if (b.t === 'pick') body += '<div class="q">' + e(b.label) + '</div>' + ans(a[b.id]);
+        else if (b.t === 'coach') (box.coach || []).forEach(c => { const t = (+c.a || 0) + (+c.b || 0); body += '<h2>Learner Coaching Notes · ' + e(c.name || 'Unnamed') + '</h2><p><strong>Capstone score:</strong> Case A ' + e(c.a || '–') + ' / 10 · Case B ' + e(c.b || '–') + ' / 10 · Total ' + t + ' / 20</p><div class="q">Demonstrated Strengths</div>' + ans(c.str) + '<div class="q">Concepts To Practice Again</div>' + ans(c.prac) + '<div class="q">Coach And Follow-Up Plan</div>' + ans(c.plan); });
+      });
+      if (faci && !hide && p.g) {
+        body += '<div class="guide"><div class="gh">Facilitator Teaching Guide · ' + p.g.minutes + ' minutes</div>' + tbl(['Time', 'Facilitator Sequence'], p.g.time.map(t => [t[0] + ' min', t[1]])) + p.g.parts.map(pt => '<h3>' + e(pt[0]) + '</h3>' + pt[1].map(x => '<p>' + e(x) + '</p>').join('')).join('') + '</div>';
+      }
+      body += '</section>';
+    });
+    const base = location.href.replace(/[#?].*$/, '').replace(/[^/]*$/, '');
+    const css = '@page{margin:16mm 14mm}body{font-family:"Proxima Nova","Helvetica Neue",Arial,sans-serif;color:#26384F;font-size:11pt;line-height:1.45;margin:0}' +
+      '.cover{background:#0B1E3A;color:#fff;padding:28px 30px;border-radius:10px;margin-bottom:22px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cover img{height:34px}.cover .k{color:#2DD4C8;font-weight:600;margin:18px 0 6px}.cover h1{color:#fff;font-size:24pt;margin:0 0 4px}.cover .m{color:#C9D4E0}' +
+      '.who{display:flex;gap:30px;flex-wrap:wrap;margin:0 0 20px;font-size:11pt}.who b{color:#0B1E3A}' +
+      'section{page-break-before:always;padding-top:4px}section:first-of-type{page-break-before:auto}.crumb{color:#5B6B80;font-weight:600;font-size:9.5pt}h1{color:#0B1E3A;font-size:18pt;margin:2px 0 12px}h2{color:#0B1E3A;font-size:13pt;margin:16px 0 6px}h3{color:#0B1E3A;font-size:11pt;margin:10px 0 4px}p{margin:0 0 8px}' +
+      'table{width:100%;border-collapse:collapse;margin:6px 0 12px;font-size:10pt;page-break-inside:auto}tr{page-break-inside:avoid}th{background:#0B1E3A;color:#fff;text-align:left;padding:6px 8px;-webkit-print-color-adjust:exact;print-color-adjust:exact}td{border:1px solid #DAE4EA;padding:6px 8px;vertical-align:top}td.k{font-weight:700;color:#0B1E3A;width:22%}td.a{color:#0B1E3A;font-weight:600}' +
+      '.q{font-weight:700;color:#0B1E3A;margin:12px 0 4px}.ans{border:1px solid #9FDCEC;background:#F2FAFD;border-radius:6px;padding:8px 10px;margin-bottom:6px;color:#0B1E3A;page-break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}.empty{color:#8A97A8;font-style:italic;font-weight:400}.key{background:#D5F5E7;color:#0E5E3E;border-radius:6px;padding:6px 10px;margin:4px 0 8px;font-weight:400;-webkit-print-color-adjust:exact;print-color-adjust:exact}.note{background:#EEF4F7;padding:8px 10px;border-radius:6px}.tag{background:#ECE9FE;color:#4B3BB0;border-radius:99px;padding:1px 8px;font-size:9pt}ul.chk{list-style:none;padding-left:0}' +
+      '.guide{border:1.5px solid #0B1E3A;border-radius:8px;padding:0 12px 8px;margin-top:16px}.gh{background:#0B1E3A;color:#fff;font-weight:700;margin:0 -12px 8px;padding:8px 12px;border-radius:6px 6px 0 0;-webkit-print-color-adjust:exact;print-color-adjust:exact}';
+    const fonts = [[400, 'pn-400'], [600, 'pn-600'], [700, 'pn-700']].map(f => '@font-face{font-family:"Proxima Nova";font-weight:' + f[0] + ';src:url("' + base + 'assets/fonts/' + f[1] + '.otf")}').join('');
+    const date = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    const all = this.totalCounts();
+    const head = '<div class="cover"><img src="' + base + 'assets/logo-light.png" alt="HealthRecon Connect"><div class="k">UT Health San Antonio · ' + (faci ? 'Facilitator Workbook' : 'Learner Workbook') + '</div><h1>Pre-Process Training Online Workbook</h1><div class="m">' + e(W.subtitle) + '</div></div>' +
+      '<div class="who"><div><b>Name:</b> ' + e(name || '—') + '</div><div><b>Cohort:</b> ' + e(cohort || '—') + '</div><div><b>Downloaded:</b> ' + e(date) + '</div><div><b>Completed:</b> ' + all[0] + ' of ' + all[1] + ' answers</div></div>';
+    return { html: '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Pre-Process Training Online Workbook · ' + e(name || 'Workbook') + '</title><style>' + fonts + css + '</style></head><body>' + head + body + '</body></html>', name };
+  }
+  totalCounts() {
+    const a = this.state.data[this.state.role].a; let d = 0, t = 0;
+    this.pagesFor(this.state.role).forEach(p => { if (!p.day) return; const c = this.countPage(p, a); d += c[0]; t += c[1]; });
+    return [d, t];
+  }
+  fileBase(name) { return 'AR-Denial-' + (this.state.role === 'faci' ? 'Facilitator' : this.state.role === 'present' ? 'Presentation' : 'Learner') + '-Workbook' + (name ? '-' + name.replace(/[^A-Za-z0-9]+/g, '-') : ''); }
+  printPdf() {
+    const r = this.buildReport();
+    const f = document.createElement('iframe');
+    f.setAttribute('style', 'position:fixed;right:0;bottom:0;width:0;height:0;border:0');
+    document.body.appendChild(f);
+    const d = f.contentDocument; d.open(); d.write(r.html.replace('<title>', '<title>' + this.esc(this.fileBase(r.name)) + ' ').replace(/<title>.*?<\/title>/, '<title>' + this.esc(this.fileBase(r.name)) + '</title>')); d.close();
+    setTimeout(() => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) {} setTimeout(() => f.remove(), 60000); }, 700);
+  }
+  download(blob, filename) { const u = URL.createObjectURL(blob); const l = document.createElement('a'); l.href = u; l.download = filename; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); }
+  downloadDoc() {
+    const r = this.buildReport();
+    const html = r.html.replace('<html>', '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">');
+    this.download(new Blob(['\ufeff', html], { type: 'application/msword' }), this.fileBase(r.name) + '.doc');
+  }
+  backup() {
+    const { role, data } = this.state;
+    const name = (data[role].p && data[role].p.name) || '';
+    this.download(new Blob([JSON.stringify({ app: 'hrc-ard-workbook', role, data: { [role]: data[role] } }, null, 1)], { type: 'application/json' }), this.fileBase(name) + '-backup.json');
+  }
+  restore(ev) {
+    const file = ev.target.files && ev.target.files[0]; if (!file) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      try {
+        const j = JSON.parse(rd.result); const r = this.state.role;
+        const box = j && j.data && j.data[r];
+        if (!box) { this.setState({ restoreMsg: 'This backup belongs to the other workbook.' }); return; }
+        this.setState(s => ({ data: { ...s.data, [r]: { ...s.data[r], ...box } }, restoreMsg: 'Backup restored.' }), () => this.persist());
+      } catch (e) { this.setState({ restoreMsg: 'That file could not be read.' }); }
+    };
+    rd.readAsText(file); ev.target.value = '';
+  }
+
+  mapBlock(b, i, a, showKeys) {
+    const K = (this.W.keys || {}), kv = id => (showKeys && K[id]) || '';
+    const o = { key: i, isFlow: false, isCompare: false, isChips: false, isH: false, isP: false, isNote: false, isUl: false, isTbl: false, isQ: false, isF: false, isDisc: false, isOrder: false, isCls: false, isChk: false, isPick: false, isWs: false, isCoach: false };
+    const val = id => a[id] == null ? '' : a[id];
+    const inp = id => ev => this.setAns(id, ev.target.value);
+    switch (b.t) {
+      case 'h': return { ...o, isH: true, text: b.text };
+      case 'p': return { ...o, isP: true, text: b.text };
+      case 'note': return { ...o, isNote: true, text: b.text };
+      case 'ul': return { ...o, isUl: true, items: b.items };
+      case 'tbl': return { ...o, isTbl: true, head: b.head, rows: b.rows.map(r => ({ k: r[0], rest: r.slice(1) })) };
+      case 'q': return { ...o, isQ: true, text: b.text, n: b.n, value: val(b.id), onInput: inp(b.id), ans: kv(b.id), hasAns: !!kv(b.id) };
+      case 'f': return { ...o, isF: true, text: b.label, value: val(b.id), onInput: inp(b.id) };
+      case 'disc': return { ...o, isDisc: true, text: b.text, value: val(b.id), onInput: inp(b.id), ans: kv(b.id), hasAns: !!kv(b.id) };
+      case 'order': {
+        const seq = String(a[b.id] || '').split(',').filter(Boolean);
+        return { ...o, isOrder: true, ans: kv(b.id), hasAns: !!kv(b.id), seq: seq.length ? seq.join(' → ') : 'Not started', onClear: () => this.setAns(b.id, ''),
+          cards: b.cards.map(c => { const pos = seq.indexOf(c[0]); return { k: c[0], text: c[1], pos: pos + 1, picked: pos >= 0, free: pos < 0,
+            onClick: () => { const s = String(this.state.data[this.state.role].a[b.id] || '').split(',').filter(Boolean); const j = s.indexOf(c[0]); if (j >= 0) s.splice(j, 1); else s.push(c[0]); this.setAns(b.id, s.join(',')); } }; }) };
+      }
+      case 'cls': return { ...o, isCls: true, hasOptions: !!b.options, freeText: !b.options, options: b.options || [], headL: b.head.slice(0, -1).join(' · '), headR: b.head[b.head.length - 1],
+        rows: b.rows.map(r => ({ k: r[0], text: r[1], hasText: !!r[1], value: val(b.id + '.' + r[0]), onInput: inp(b.id + '.' + r[0]), ans: kv(b.id + '.' + r[0]), hasAns: !!kv(b.id + '.' + r[0]) })) };
+      case 'ws': return { ...o, isWs: true, headL: b.head[0], headR: b.head[1], rows: b.rows.map((r, j) => ({ label: r, value: val(b.id + '.' + j), onInput: inp(b.id + '.' + j) })) };
+      case 'chk': return { ...o, isChk: true, items: b.items.map((x, j) => { const on = !!a[b.id + '.' + j]; return { text: x, on, off: !on, onToggle: () => this.setAns(b.id + '.' + j, !on) }; }) };
+      case 'pick': return { ...o, isPick: true, text: b.label, opts: b.options.map(x => { const on = a[b.id] === x; return { text: x, on, off: !on, pick: () => this.setAns(b.id, on ? '' : x) }; }) };
+      case 'coach': return { ...o, isCoach: true };
+      case 'flow': return { ...o, isFlow: true, title: b.title, hasTitle: !!b.title, steps: b.steps.map((st, j) => ({ n: j + 1, label: st[0], sub: st[1], hasSub: !!st[1], notLast: j < b.steps.length - 1 })) };
+      case 'compare': { const T = { cyan: ['#E4F5F9', '#05B4E0'], teal: ['#DDF7F5', '#2DD4C8'], green: ['#D5F5E7', '#3DDC97'], amber: ['#FFF1D6', '#FFB547'], pink: ['#FDE2E9', '#FF6F91'], violet: ['#ECE9FE', '#8B7CF6'] };
+        return { ...o, isCompare: true, title: b.title, hasTitle: !!b.title, cols: b.cols.map(c => { const tt = T[c[2]] || T.cyan; return { h: c[0], body: c[1], st: 'background:' + tt[0] + ';border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;border-top:5px solid ' + tt[1] }; }) }; }
+      case 'chips': return { ...o, isChips: true, title: b.title, items: b.items };
+    }
+    return o;
+  }
+
+  renderVals() {
+    const s = this.state;
+    if (!s.ready || !this.W) return { showGate: false, showApp: false, showReg: false };
+    const W = this.W;
+    if (!s.role) {
+      return { showGate: true, showApp: false, showReg: false, pass: s.pass, passMsg: s.passMsg, hasPassMsg: !!s.passMsg,
+        onPass: e => this.setState({ pass: e.target.value, passMsg: '' }),
+        passKey: e => { if (e.key === 'Enter') this.chooseFaci(); },
+        chooseLearner: () => this.setState({ role: 'learner', cur: 'welcome' }, () => this.persist()),
+        chooseFaci: () => this.chooseFaci(), choosePresent: () => this.chooseFaci('present') };
+    }
+    if (s.role === 'learner' && (!s.data.learner.reg || s.editReg)) {
+      const f = s.reg || s.data.learner.reg || {};
+      const fld = k => e => { const v = e.target.value; this.setState(st => ({ reg: { ...(st.reg || st.data.learner.reg || {}), [k]: v }, regMsg: '' })); };
+      return { showGate: false, showApp: false, showReg: true, rName: f.name || '', rEmail: f.email || '', rEmp: f.emp || '', rCohort: f.cohort || '', rTeam: f.team || '', rSup: f.sup || '',
+        onRName: fld('name'), onREmail: fld('email'), onREmp: fld('emp'), onRCohort: fld('cohort'), onRTeam: fld('team'), onRSup: fld('sup'),
+        regMsg: s.regMsg || '', hasRegMsg: !!s.regMsg, doRegister: () => this.register(), regKey: e => { if (e.key === 'Enter') this.register(); },
+        regBtn: s.editReg ? 'Save my details' : 'Start my workbook', hasRegBack: !!s.data.learner.reg, regBack: () => this.setState({ editReg: false, reg: null, regMsg: '' }), regBackLbl: 'Cancel',
+        regSwitch: () => this.setState({ role: null }, () => this.persist()) };
+    }
+    const role = s.role, faci = role === 'faci', present = role === 'present', box = s.data[role], a = box.a, hide = faci && !!box.hide;
+    const pages = this.pagesFor(role);
+    let idx = pages.findIndex(p => p.id === s.cur); if (idx < 0) idx = 0;
+    const page = pages[idx];
+    const locked = !!page.day && !this.isOpen(page.day);
+    const special = ['welcome', 'map', 'codes', 'download'].includes(page.id);
+
+    const dayPct = d => { let x = 0, t = 0; pages.filter(p => p.day === d).forEach(p => { const c = this.countPage(p, a); x += c[0]; t += c[1]; }); return [x, t]; };
+    const item = p => {
+      const active = p.id === page.id, open = this.isOpen(p.day);
+      const c = this.countPage(p, a), pc = c[1] ? c[0] / c[1] : 0;
+      const tag = p.day ? (open ? (p.id + (typeof p.minutes === 'number' ? ' · ' + p.minutes + ' min' : '') + (c[1] ? ' · ' + this.pct(c[0], c[1]) + '%' : '')) : p.id + ' · Locked') : (p.faciOnly ? 'Facilitator only' : '');
+      return { title: p.title, tag, go: () => this.go(p.id),
+        st: 'display:flex;gap:12px;align-items:center;width:100%;text-align:left;border:0;border-radius:10px;padding:8px 12px;min-height:44px;cursor:pointer;font-size:15px;line-height:1.3;font-weight:' + (active ? 700 : 600) + ';background:' + (active ? 'rgba(255,255,255,.09)' : 'transparent') + ';color:' + (active ? '#FFFFFF' : (open ? '#C9D4E0' : '#6F8199')),
+        bar: 'flex:none;display:block;width:7px;height:20px;border-radius:2px;transform:skewY(-26deg);background:' + (!open ? 'rgba(255,255,255,.08)' : 'linear-gradient(to top,#2DD4C8 ' + Math.round(pc * 100) + '%,rgba(255,255,255,.16) ' + Math.round(pc * 100) + '%)') };
+    };
+    const groups = [];
+    groups.push({ label: 'Start', meta: '', items: pages.filter(p => p.group === 'start').map(item) });
+    [1, 2, 3].forEach(d => { const c = dayPct(d); groups.push({ label: 'Day ' + d, meta: this.isOpen(d) ? this.pct(c[0], c[1]) + '%' : 'Locked', items: pages.filter(p => p.day === d).map(item) }); });
+    groups.push({ label: 'Close', meta: '', items: pages.filter(p => p.group === 'close').map(item) });
+
+    const tot = this.totalCounts(), totPct = this.pct(tot[0], tot[1]);
+    const dayStatus = [1, 2, 3].map(d => { const c = dayPct(d); const open = this.isOpen(d); return { n: d, title: W.days[d].title, q: W.days[d].q, open, locked: !open, pct: this.pct(c[0], c[1]) + '%', go: () => this.go(pages.find(p => p.day === d).id) }; });
+
+    const prev = pages[idx - 1], next = pages[idx + 1];
+    const narrow = s.narrow, navHidden = s.role === 'present' && !!s.hideNav && !narrow;
+    const sidebarStyle = 'position:fixed;top:0;bottom:0;left:0;width:292px;background:#0B1E3A;display:flex;flex-direction:column;overflow-y:auto;z-index:40;transition:transform .25s ease;' + (narrow ? 'transform:translateX(' + (s.navOpen ? '0' : '-100%') + ');box-shadow:0 0 40px rgba(0,0,0,.3)' : (navHidden ? 'transform:translateX(-100%)' : ''));
+
+    const g = page.g;
+    const lp = this.learnerPageNo(page.id);
+    const crumb = (lp ? 'Page ' + lp + ' · ' : '') + (page.day ? 'Day ' + page.day + ' · ' + page.kind + (typeof page.minutes === 'number' ? ' · ' + page.minutes + ' minutes' : '') : page.kind);
+
+    const fname = (box.p && box.p.name) || '';
+    return {
+      showReg: false, showGate: false, showApp: true, narrow, notNarrow: !narrow, showScrim: narrow && s.navOpen,
+      toggleNav: () => this.setState({ navOpen: !s.navOpen }),
+      sidebarStyle, mainStyle: 'transition:padding .25s ease;padding:' + (narrow ? '18px 12px 90px' : (navHidden ? '36px 40px 100px 40px' : '36px 40px 100px 332px')),
+      pageStyle: 'max-width:880px;margin:0 auto;background:#FFFFFF;border-radius:16px;box-shadow:0 1px 2px rgba(11,30,58,.05),0 12px 32px rgba(11,30,58,.06);overflow:hidden;padding:' + (narrow ? '24px 20px 30px' : '48px'),
+      heroStyle: 'background:#0B1E3A;position:relative;overflow:hidden;' + (narrow ? 'margin:-24px -20px 28px;padding:32px 22px 30px' : 'margin:-48px -48px 36px;padding:48px 48px 44px'),
+      roleLabel: faci ? 'Facilitator Workbook' : 'Learner Workbook',
+      isPresent: present, isIdle: role === 'learner' && !!s.idle, idleMsg: s.idleMsg || '', confirmHere: () => this.confirmHere(), timeLabel: this.fmtTime(((box.t || {}).total || 0) + Object.values(this._acc || {}).reduce((x, y) => x + y, 0)), showTime: role === 'learner', reg: box.reg || {}, hasRegCard: role === 'learner' && !!box.reg, notRegCard: role !== 'learner', editDetails: () => this.setState({ editReg: true, reg: { ...(box.reg || {}) } }), saveNote: role === 'learner' && W.sheetUrl ? 'Your progress and time are shared with your facilitator.' : 'Answers save automatically on this device.', revealBtn: s.reveal ? 'Hide key' : 'Key', toggleReveal2: () => this.setState({ reveal: !s.reveal }), navBtn: s.hideNav ? 'Menu' : 'Hide menu', toggleSideNav: () => this.setState({ hideNav: !s.hideNav }), revealDot: 'display:block;width:6px;height:6px;border-radius:50%;background:' + (s.reveal ? '#3DDC97' : '#B9CBD6'), toPresent: () => this.setState({ role: 'present', reveal: false }, () => this.persist()), toFaci: () => this.setState({ role: 'faci' }, () => this.persist()), showUnlock: role === 'learner',
+      editionName: faci ? 'Facilitator Workbook' : 'Learner Workbook',
+      isFaci: faci, isLearner: !faci, groups,
+      ...(() => { const kp = present && !locked ? this.keyParts(page) : { key: [], take: [] }; const has = kp.take.length > 0; return { hasReveal: has && !!s.reveal, revealOn: has && !!s.reveal, revealLabel: s.reveal ? 'Hide answer key' : 'Reveal answer key & key takeaways', toggleReveal: () => this.setState({ reveal: !s.reveal }), keyItems: kp.key.map(p => ({ h: p[0], paras: p[1] })), takeItems: kp.take.map(p => ({ h: p[0], paras: p[1] })), hasKey: false, hasTake: kp.take.length > 0 }; })(),
+      totalLabel: totPct + '%', meterStyle: 'display:block;height:100%;width:' + totPct + '%;background:linear-gradient(90deg,#2DD4C8,#05B4E0);border-radius:3px',
+      switchRole: () => this.setState({ role: null, pass: '', passMsg: '' }, () => this.persist()),
+      resetAll: () => { if (window.confirm('Clear all answers in this ' + (faci ? 'facilitator' : 'learner') + ' workbook on this device? This cannot be undone.')) this.upd(b => ({ ...b, a: {}, coach: faci ? [{}] : b.coach })); },
+      jump: s.jump, jumpMsg: s.jumpMsg, hasJumpMsg: !!s.jumpMsg,
+      onJump: e => this.setState({ jump: e.target.value, jumpMsg: '' }),
+      jumpKey: e => { if (e.key === 'Enter') this.doJump(); }, doJump: () => this.doJump(),
+      hideTrack: 'position:relative;display:inline-block;width:40px;height:24px;border-radius:999px;background:' + (hide ? '#05B4E0' : '#DAE4EA') + ';transition:background .2s',
+      hideKnob: 'position:absolute;top:3px;left:' + (hide ? 19 : 3) + 'px;width:18px;height:18px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .2s',
+      toggleHide: () => this.upd(b => ({ ...b, hide: !b.hide })),
+
+      isWelcome: page.id === 'welcome', notWelcome: page.id !== 'welcome',
+      name: fname, cohort: (box.p && box.p.cohort) || '',
+      onName: e => { const v = e.target.value; this.upd(b => ({ ...b, p: { ...b.p, name: v } })); },
+      onCohort: e => { const v = e.target.value; this.upd(b => ({ ...b, p: { ...b.p, cohort: v } })); },
+      code: s.code, codeMsg: s.codeMsg, hasCodeMsg: !!s.codeMsg,
+      codeMsgStyle: 'font-weight:600;font-size:15.5px;color:' + (s.codeOk ? '#0E5E3E' : '#9B1B3F'),
+      onCode: e => this.setState({ code: e.target.value, codeMsg: '' }),
+      codeKey: e => { if (e.key === 'Enter') this.submitCode(); }, submitCode: () => this.submitCode(),
+      dayStatus,
+
+      hasCode: !!page.day, pageCode: page.id, crumb, pageTitle: page.title,
+      isLocked: locked, lockDay: page.day || '',
+      isMap: page.id === 'map',
+      mapDays: [1, 2, 3].map(d => ({ n: d, title: W.days[d].title, state: this.isOpen(d) ? 'Open' : 'Locked', rows: pages.filter(p => p.day === d).map(p => ({ code: p.id, title: p.title, meta: 'Page ' + this.learnerPageNo(p.id) + ' · ' + (typeof p.minutes === 'number' ? p.minutes + ' min' : p.minutes), go: () => this.go(p.id) })) })),
+      isCodes: page.id === 'codes',
+      codeDays: [1, 2, 3].map(d => ({ n: d, title: W.days[d].title, codes: W.codeWords[d].map(w => { const c = this.makeCode(d, w); return { code: c, label: s.copied === c ? 'Copied' : 'Copy', copy: () => this.copy(c, c) }; }) })),
+      cw: s.cw, onCw: e => this.setState({ cw: e.target.value }),
+      dayPills: [1, 2, 3].map(d => ({ n: d, pick: () => this.setState({ cd: d }), st: 'border-radius:999px;min-height:44px;padding:0 16px;font-weight:700;cursor:pointer;border:1px solid ' + (s.cd === d ? '#05B4E0' : 'rgba(255,255,255,.2)') + ';background:' + (s.cd === d ? '#05B4E0' : 'transparent') + ';color:' + (s.cd === d ? '#0B1E3A' : '#FFFFFF') })),
+      hasCustom: !!this.makeCode(s.cd, s.cw), customCode: this.makeCode(s.cd, s.cw),
+      customLabel: s.copied === 'custom' ? 'Copied' : 'Copy code', copyCustom: () => this.copy(this.makeCode(s.cd, s.cw), 'custom'),
+
+      isBlocks: !!page.blocks && !locked,
+      blocks: !locked && page.blocks ? page.blocks.map((b, i) => this.mapBlock(b, i, a, (present && !!s.reveal) || (faci && !hide))) : [],
+      coach: (box.coach || []).map((c, j) => {
+        const set = k => e => { const v = e.target.value; this.upd(b => { const arr = (b.coach || []).slice(); arr[j] = { ...arr[j], [k]: v }; return { ...b, coach: arr }; }); this.queueSync('coach'); };
+        return { name: c.name || '', a: c.a || '', b: c.b || '', str: c.str || '', prac: c.prac || '', plan: c.plan || '', total: (+c.a || 0) + (+c.b || 0),
+          onName: set('name'), onA: set('a'), onB: set('b'), onStr: set('str'), onPrac: set('prac'), onPlan: set('plan'),
+          remove: () => this.upd(b => { const arr = (b.coach || []).slice(); arr.splice(j, 1); return { ...b, coach: arr.length ? arr : [{}] }; }) };
+      }),
+      addCoach: () => this.upd(b => ({ ...b, coach: [...(b.coach || []), {}] })),
+      showGuide: faci && !hide && !!g && !locked,
+      guideMeta: g ? g.minutes + ' minutes · Session ' + page.id + (lp ? ' · Learner page ' + lp : '') : '',
+      guideTime: g ? g.time.map(t => ({ m: t[0], text: t[1] })) : [],
+      guideParts: g ? g.parts.map(p => ({ h: p[0], paras: p[1] })) : [],
+
+      isDownload: page.id === 'download',
+      downloadIntro: faci ? 'Download your facilitator workbook with your notes, coaching records, and scores. Teaching guides are included unless “Hide facilitator notes” is on.' : 'Download your completed workbook with every answer you typed, then submit it privately as your facilitator directs. Only the days you have unlocked are included.',
+      summary: [1, 2, 3].map(d => { const c = dayPct(d); return { label: 'Day ' + d, pct: this.isOpen(d) ? this.pct(c[0], c[1]) + '%' : 'Locked', detail: this.isOpen(d) ? c[0] + ' of ' + c[1] + ' answers' : 'Enter the Day ' + d + ' code to open' }; }),
+      missingName: !fname.trim(),
+      onPdf: () => { this.printPdf(); this.markDl('Downloaded workbook (PDF)'); }, onDoc: () => { this.downloadDoc(); this.markDl('Downloaded workbook (Word)'); }, onBackup: () => this.backup(), onRestore: e => this.restore(e),
+      restoreMsg: s.restoreMsg, hasRestoreMsg: !!s.restoreMsg,
+
+      hasFooter: true, hasPrev: !!prev, hasNext: !!next,
+      goPrev: () => prev && this.go(prev.id), goNext: () => next && this.go(next.id),
+      nextLabel: next ? (next.day ? next.id + ' ' + next.title : next.title) : ''
+    };
+  }
+
+  keyParts(page) {
+    const KEY = ['Answer Guidance', 'Model Note', 'Model Handoff', 'Acceptable Outcomes', 'Teach Back Answer Cues', 'Capstone Key · Case A', 'Capstone Key · Case B'];
+    const TAKE = ['Correct This Misconception', 'Coach The Distinction', 'Teaching Boundary', 'Check Before Moving On', 'Coaching Check', 'Peer Criteria'];
+    let g = page.g;
+    if (!g && (page.id === 'C-A' || page.id === 'C-B')) { const cap = this.W.pages.find(p => p.id === '3.6'); const want = page.id === 'C-A' ? 'Capstone Key · Case A' : 'Capstone Key · Case B'; return { key: cap.g.parts.filter(p => p[0] === want), take: [] }; }
+    if (!g) return { key: [], take: [] };
+    return { key: g.parts.filter(p => KEY.includes(p[0])), take: g.parts.filter(p => TAKE.includes(p[0])) };
+  }
+  learnerPageNo(id) { const i = this.W.pages.filter(p => !p.faciOnly).findIndex(p => p.id === id); return i < 0 ? 0 : i + 1; }
+  chooseFaci(mode) {
+    const p = String(this.state.pass || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (p === 'UTHFACI2026') this.setState({ role: mode === 'present' ? 'present' : 'faci', cur: 'welcome', pass: '', passMsg: '' }, () => this.persist());
+    else this.setState({ passMsg: 'That passcode isn’t right.' });
+  }
+  doJump() {
+    const q = String(this.state.jump || '').trim().toUpperCase().replace(/\s+/g, '');
+    if (!q) return;
+    const pages = this.pagesFor(this.state.role);
+    const p = pages.find(x => x.id.toUpperCase() === q || x.id.toUpperCase().replace(/[^A-Z0-9.]/g, '') === q.replace(/[^A-Z0-9.]/g, ''));
+    const lpages = this.W.pages.filter(x => !x.faciOnly);
+    const byPage = /^(P|PAGE|PG)?\d+$/.test(q) && !p ? lpages[parseInt(q.replace(/\D/g, ''), 10) - 1] : null;
+    if (byPage) { this.setState({ jump: '' }); this.go(byPage.id); return; }
+    if (!p) { this.setState({ jumpMsg: 'No session or page “' + this.state.jump + '”.' }); return; }
+    this.setState({ jump: '' }); this.go(p.id);
+  }
+}
+</script>
+</body>
+</html>
