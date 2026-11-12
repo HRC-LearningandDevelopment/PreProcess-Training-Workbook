@@ -925,3 +925,185 @@
   const ui = cap.blocks.findIndex(b => b.t === 'ul');
   if (ui >= 0) cap.blocks[ui] = flow('', [['Identify', 'Hospital claim, payer product, service date'], ['Classify', 'Current issue + the record that supports it'], ['Explain', 'Remaining balance or amount at risk; separate remit and posting'], ['Plan', 'One evidence gap + a safe next step, deadline, ownership'], ['Write', 'A concise account note another collector can use']]);
 })();
+
+/* Plain-language pass: simplified prompts + original term first with plain meaning on first use per page */
+(function () {
+  const W = window.ARD_WORKBOOK;
+  const RW = {
+    'A.q1': '1. Copy the hospital account number (HAR) and the payer claim number (ICN). What does each one identify?',
+    'A.q2': '2. Which entry first shows the payer’s decision? Which separate entry shows the payment was posted?',
+    'A.q3': '3. If the ledger did not match the remit, what one piece of evidence would you ask for?',
+    '1.1.q1': 'A plan ID was entered wrong before the claim was sent. Name one sign later in the process that could reveal the mistake, and one place you would check.',
+    '1.1.d1': 'A physician was paid for the same visit (professional bill). Does that settle the hospital bill? Why or why not?',
+    '1.2.q1': 'A classmate sees “Commercial” and says, “That tells us which plan to call.” Which field shows the actual plan? Another classmate sees $120 on the HAR and says, “Insurance owes $120.” Which two fields would you compare to see who owes it?',
+    '1.3.q1': 'Which cards come from the same insurance company (brand)?',
+    '1.3.q2': 'Which words on the cards tell you the product is different?',
+    '1.3.q3': 'What would you check for the actual date of service?',
+    '1.4.q1': '1. What do the two coverage records confirm? What is still not confirmed?',
+    '1.4.q2': '2. Before asking to change which payer is billed first (filing order), which two sources would you check?',
+    '1.4.q3': '3. An authorization number appears in a note. What must match before you can rely on it?',
+    '1.4.d1': 'The payer confirms the patient is enrolled. Does that resolve a “no authorization” denial for a specific service?',
+    '1.5.q1': 'For timeline A, what question would you ask before deciding what to do?',
+    '1.5.q2': 'Using Training Account A, find three separate dates: when the claim was sent, when the payer accepted it, and when the payer made its decision (adjudication).',
+    '1.6.q1': '1. After the posted insurance payment and contractual adjustment, how much is left? Which bucket is it in?',
+    '1.6.q2': '2. Why is the allowed amount ($600) different from what the payer paid ($480)?',
+    '1.6.q3': '3. How would your answer change if the $480 was on the remit but not on the ledger? And if a valid secondary insurance was confirmed later?',
+    '1.7.q1': '1. Which claim are you working on: the hospital claim or the clinician’s claim? Which payer and product is it?',
+    '1.7.q2': '2. What is the latest claim status the packet supports? Point to the evidence.',
+    '1.7.q3': '3. Does the $760 balance prove the payer owes exactly $760? Explain.',
+    '1.7.q4': '4. If the payer later says the claim was paid, what one extra detail would you ask for?',
+    '1.7.q5': 'Compare with Training Account A. Name one difference in how the claim was processed, and one difference in who owes the balance.',
+    '1.7.q6': 'Write one difference you can now explain, and one you want to practise again.',
+    '2.1.q2': '2. “This is UnitedHealthcare, so I know which product to call.”',
+    '2.2.q1': '1. Which two items would you flag first because of a deadline? Why?',
+    '2.2.q2': '2. Which item would you research next? What fact could move it up or down the list?',
+    '2.2.q3': '3. Why shouldn’t AR-25 be marked resolved based on these facts?',
+    '2.3.q1': '1. For each case, name one confirmed fact and one missing piece of evidence.',
+    '2.3.q2': '2. For R1, which identifiers and evidence would you compare before deciding the payer never received the claim?',
+    '2.3.q3': '3. Write a different opening question for the payer in each case.',
+    '2.3.d1': 'When would you stop normal follow-up and use the approved filing or escalation process?',
+    '2.5.q1': 'For C, how much is the possible underpayment?',
+    '2.5.q2': 'For D, why doesn’t the credit balance give you permission to refund?',
+    '2.6.q1': '1. Write a short note a colleague could act on.',
+    '2.6.q2': '2. What should the note say about the deadline?',
+    '2.6.q3': '3. What if a separate notice says a response is required by October 23? How would your next step change?',
+    '2.7.q1': '1. What is the issue? What does the remit tell you, and what does the ledger tell you?',
+    '2.7.q2': '2. What evidence should you check, or include in a payment research handoff?',
+    '2.7.q3': '3. Write a note with the next step. Do not say the patient owes $500.',
+    '2.7.q4': 'A colleague wants to resubmit the claim because the balance is still open. Explain why the packet points to a different path. Then: if a matching $400 payment posted later, what would you check?',
+    'ws.payer': 'Payer, Product, And Verified Filing Order (Who Is Billed First)',
+    'ws.owner': 'Next Internal Review Date And Owner To Confirm',
+    'ws.peer': 'Could another collector tell what was confirmed, what is still open, and what to do next?',
+    '3.1.q1': '1. Which cards show the payer actually decided to deny (an adjudicated denial)?',
+    '3.1.q2': '2. For card D, what details would you copy from the letter?',
+    '3.1.q3': '3. For card F, why is it wrong to say “the entire claim was denied”?',
+    '3.1.d1': 'A worklist is called “denials.” Why should you still read what the payer actually said?',
+    '3.3.q1': '1. Which line was denied, and how much is at stake on that line?',
+    '3.3.q2': '2. Which entries explain line 1? Why is its $100 different from the line 2 amount?',
+    '3.3.q3': '3. After the posted payment and adjustment, what is the total balance? How much of it is still with insurance?',
+    '3.3.q4': '4. For line 2, what is the first document or fact you would check?',
+    '3.4.q1': '1. What stage is each case at? Which dates come from the payer notices?',
+    '3.4.q2': '2. In packet A, what is missing or doesn’t match? What would prove the appeal was sent?',
+    '3.4.q3': '3. What must you check before handing packet B to the approved owner?',
+    '3.5.q1': '1. For each case, what needs review, and what evidence should you include?',
+    '3.5.q2': '2. Which client reference would you use to confirm who owns it?',
+    '3.5.d1': 'What claim information does the next person need, and what can you leave out?',
+    '3.6.q1': 'Which part of your thinking was strongest?',
+    '3.6.q2': 'Which part do you still need coaching on?',
+    'CA.1': '1 · Identify The Claim And Product: Give the claim, the payer and product, and the date of service.',
+    'CA.2': '2 · Classify And Support: What is the issue? Which two entries in the packet show it?',
+    'CA.3': '3 · Explain The Balance: What is open now? What would be left if the matching payment posted?',
+    'CA.4': '4 · Plan The Next Step: What evidence is missing, and what type of review is needed?',
+    'CA.5': '5 · Write The Note: Include the evidence, reference numbers, and next step.',
+    'CB.1': '1 · Identify The Claim And Product: Give the claim, the payer and product, and the date of service.',
+    'CB.2': '2 · Classify And Support: Which line is affected, and what reason did the payer give?',
+    'CB.3': '3 · Explain The Balance: Separate the denied line amount from the patient’s cost-sharing.',
+    'CB.4': '4 · Plan The Next Step: What evidence is missing, which deadline matters, and whose approval must be confirmed?',
+    'CB.5': '5 · Write The Note: Say what is confirmed and what you would hand off.',
+    '3.7.q3': 'One client-specific question I need answered before working this type of account:'
+  };
+  const RP = {
+    '2.1': [['For each case, identify the bill and payer product, check responsibility, classify the current issue, and choose the next question.', 'For each case, identify the claim and the payer’s product, check who owes the balance, name the current issue, and choose your next question.'], ['is an unsupported prediction', 'is a guess the evidence does not support'], ['Use the categories coverage, submission/acknowledgment, adjudication, posting, and follow-up documentation. A category can be used more than once.', 'Sort each item into one of these categories: coverage, submission/acknowledgment, adjudication, posting, or follow-up documentation. You can use a category more than once.'], ['Rewrite each statement with the strongest conclusion the evidence supports.', 'Rewrite each statement so it says only what the evidence actually proves.']],
+    '2.4': [['Write the payer response and reference. Then state your next action or handoff in one sentence.', 'Write down the payer’s response and reference number. Then write your next step or handoff in one sentence.']],
+    '2.5': [['For each, name the issue and the next evidence to check.', 'For each case, name the issue and the next evidence to check.']],
+    'AR-WS': [['Use this worksheet for any fictional account. Complete the fields with what the evidence supports. Use “not verified” where the packet does not establish a fact.', 'Use this worksheet for any practice account. Fill in only what the evidence supports. Write “not verified” when the packet doesn’t confirm something.']],
+    '3.2': [['For each, record the category, one fact to verify, and one action you would avoid until the right owner reviews it.', 'For each case, write the denial category, one fact to check, and one action to avoid until the right owner reviews it.']],
+    '3.6': [['Each case has the facts you need for a training recommendation. Do not assume facts or take actions not supported by the packet. Case dates are fictional and do not establish real payer rules.', 'Each case has everything you need. Don’t assume facts or take actions the packet doesn’t support. Dates are fictional and are not real payer rules.']],
+    '3.7': [['Choose one distinction. Explain it in your own words and give one example from the workbook.', 'Choose one difference below. Explain it in your own words and give one example from the workbook.']]
+  };
+  W.pages.forEach(p => (p.blocks || []).forEach(b => {
+    if (b.id && RW[b.id]) { if (b.t === 'f') b.label = RW[b.id]; else b.text = RW[b.id]; }
+    if (b.t === 'p' && RP[p.id]) RP[p.id].forEach(([a, c]) => { if (b.text.indexOf(a) >= 0) b.text = b.text.replace(a, c); });
+  }));
+
+  const G = [
+    ['CO-45', 'charge is above the contracted rate; written off, not billed to the patient'],
+    ['CO-197', 'required prior authorization was missing'],
+    ['PR-2', 'coinsurance the patient owes'],
+    ['CMS-1450', 'paper hospital claim form, same as the UB-04'],
+    ['UB-04', 'paper hospital claim form'],
+    ['837I', 'electronic hospital claim'],
+    ['835', 'electronic remittance file'],
+    ['AR', 'accounts receivable: money still owed to the hospital'],
+    ['HB', 'hospital bill: facility charges', 'hospital bill (HB)'],
+    ['PB', 'professional bill: clinician charges', 'professional bill (PB)'],
+    ['MRN', 'medical record number'],
+    ['HAR', 'hospital account record'],
+    ['ICN', 'the payer’s claim number'],
+    ['WQ', 'workqueue: a work list in Epic'],
+    ['BCBSTX', 'Blue Cross Blue Shield of Texas'],
+    ['MAC', 'Medicare Administrative Contractor', 'Medicare Administrative Contractor'],
+    ['MA', 'Medicare Advantage'],
+    ['CHIP', 'Children’s Health Insurance Program'],
+    ['STAR', 'a Texas Medicaid managed care program', 'Texas Medicaid programs'],
+    ['PPO', 'preferred provider organization'],
+    ['HMO', 'health maintenance organization'],
+    ['EPO', 'exclusive provider organization'],
+    ['QHP', 'qualified health plan sold on the Marketplace'],
+    ['DRG', 'diagnosis related group'],
+    ['COB', 'coordination of benefits: which insurance pays first', 'Coordination of Benefits (COB)'],
+    ['MSP', 'Medicare Secondary Payer', 'Medicare Secondary Payer (MSP)'],
+    ['ERA', 'electronic remittance advice'],
+    ['EOB', 'explanation of benefits'],
+    ['EFT', 'electronic funds transfer: payment sent straight to the bank'],
+    ['CARC', 'claim adjustment reason code: why the amount changed'],
+    ['RARC', 'remittance advice remark code: extra detail'],
+    ['CO', 'contractual obligation: the hospital writes it off', 'CO is Contractual Obligation'],
+    ['PR', 'patient responsibility: the patient may owe it', 'PR is Patient Responsibility'],
+    ['ADR', 'additional documentation request: the payer wants records'],
+    ['DOS', 'date of service'],
+    ['HCPCS', 'procedure and supply codes'],
+    ['CPT', 'procedure codes'],
+    ['OPPS', 'Outpatient Prospective Payment System', 'Outpatient Prospective Payment System'],
+    ['HOPD', 'hospital outpatient department', 'HOPD means'],
+    ['DNB', 'discharged, not billed', 'DNB means'],
+    ['SOW', 'client procedure document'],
+    ['HIPAA', 'federal patient-privacy law'],
+    ['CMS', 'Centers for Medicare & Medicaid Services'],
+    ['remittance', 'the payer’s explanation of what it paid and why', null, 'remit'],
+    ['remit', 'the payer’s explanation of what it paid and why'],
+    ['payer products', 'plan types', null, 'product'], ['payer product', 'plan type', null, 'product'], ['products', 'plan types', null, 'product'], ['product', 'plan type', null, 'product'],
+    ['posting', 'recording the payment on the account', null, 'post'], ['posted', 'recorded on the account', null, 'post'],
+    ['ledger', 'the account’s record of payments and adjustments'],
+    ['bucket', 'who owes it: insurance or patient'],
+    ['responsibility', 'who owes it'],
+    ['evidence', 'proof in the record'],
+    ['handoff', 'referring it to the right team'], ['hand off', 'refer it to the right team', null, 'handoff']
+  ];
+  const esc = s => s.replace(/[.*+?^\${}()|[\]\\]/g, '\\$&');
+  const rx = G.map(g => { const word = /^[a-z ]+$/.test(g[0]); return new RegExp('(?<![\\w(\\-/])(' + esc(g[0]) + ')(?![\\w\\-/])(?!\\s\\()', word ? 'i' : ''); });
+  W.glossary = G;
+  W.pages.forEach(p => {
+    if (!p.blocks) return;
+    const all = JSON.stringify(p.blocks);
+    const seen = {};
+    const ann = s => {
+      if (!s || typeof s !== 'string') return s;
+      G.forEach((g, i) => {
+        const key = g[3] || g[0];
+        if (seen[key]) return;
+        if (g[2] && all.indexOf(g[2]) >= 0) { seen[key] = 1; return; }
+        const m = s.match(rx[i]);
+        if (m) { seen[key] = 1; const at = m.index + m[0].length; const after = s.slice(at), before = s.slice(0, m.index); if (/^\s+(is|are|means|refers)\b/.test(after) || /\b(Patient|Contractual)\s$/.test(before)) return; s = before + m[0] + ' (' + g[1] + ')' + after; }
+      });
+      return s;
+    };
+    p.blocks.forEach(b => {
+      if (b.t === 'p' || b.t === 'note' || b.t === 'q' || b.t === 'disc') b.text = ann(b.text);
+      else if (b.t === 'f') b.label = ann(b.label);
+      else if (b.t === 'ul') b.items = b.items.map(ann);
+      else if (b.t === 'tbl') b.rows = b.rows.map(r => r.map((c, j) => j === 0 ? c : ann(c)));
+      else if (b.t === 'cls') b.rows = b.rows.map(r => [r[0], ann(r[1])]);
+      else if (b.t === 'order') b.cards = b.cards.map(c => [c[0], ann(c[1])]);
+      else if (b.t === 'compare') b.cols = b.cols.map(c => [c[0], ann(c[1]), c[2]]);
+    });
+  });
+
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const rows = G.filter(g => ['payer products', 'payer product', 'products', 'posted', 'hand off', 'remittance'].indexOf(g[0]) < 0).map(g => [g[0], cap(g[1])]);
+  const ri = W.pages.findIndex(p => p.id === 'refs');
+  W.pages.splice(ri + 1, 0, { id: 'glossary', group: 'close', title: 'Glossary Of Terms And Acronyms', kind: 'Reference', blocks: [
+    { t: 'p', text: 'Every term below is explained in brackets the first time it appears on a page. Use this list any time you need a reminder.' },
+    { t: 'tbl', head: ['Term', 'Plain Meaning'], rows }
+  ] });
+})();

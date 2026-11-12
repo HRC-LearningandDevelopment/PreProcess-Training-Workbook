@@ -864,7 +864,7 @@ class Component extends DCLogic {
     pages.forEach(p => {
       const code = p.day ? p.id : '';
       const lpn = this.learnerPageNo(p.id);
-      body += '<section><div class="crumb">' + (lpn ? 'Page ' + lpn + ' · ' : '') + (p.day ? 'Day ' + p.day + ' · ' + e(code) + ' · ' : '') + e(p.kind) + (typeof p.minutes === 'number' ? ' · ' + p.minutes + ' min' : '') + '</div><h1>' + e(p.title) + '</h1>';
+      body += '<section><div class="crumb">' + (lpn ? 'Page ' + lpn + ' · ' : '') + (p.day ? 'Day ' + p.day + ' · ' + e(code) + ' · ' : '') + e(p.kind) + '</div><h1>' + e(p.title) + '</h1>';
       p.blocks.forEach(b => {
         if (b.t === 'h') body += '<h2>' + e(b.text) + '</h2>';
         else if (b.t === 'p') body += '<p>' + e(b.text) + '</p>';
@@ -1007,7 +1007,7 @@ class Component extends DCLogic {
     const item = p => {
       const active = p.id === page.id, open = this.isOpen(p.day);
       const c = this.countPage(p, a), pc = c[1] ? c[0] / c[1] : 0;
-      const tag = p.day ? (open ? (p.id + (typeof p.minutes === 'number' ? ' · ' + p.minutes + ' min' : '') + (c[1] ? ' · ' + this.pct(c[0], c[1]) + '%' : '')) : p.id + ' · Locked') : (p.faciOnly ? 'Facilitator only' : '');
+      const tag = p.day ? (open ? (p.id + (c[1] ? ' · ' + this.pct(c[0], c[1]) + '%' : '')) : p.id + ' · Locked') : (p.faciOnly ? 'Facilitator only' : '');
       return { title: p.title, tag, go: () => this.go(p.id),
         st: 'display:flex;gap:12px;align-items:center;width:100%;text-align:left;border:0;border-radius:10px;padding:8px 12px;min-height:44px;cursor:pointer;font-size:15px;line-height:1.3;font-weight:' + (active ? 700 : 600) + ';background:' + (active ? 'rgba(255,255,255,.09)' : 'transparent') + ';color:' + (active ? '#FFFFFF' : (open ? '#C9D4E0' : '#6F8199')),
         bar: 'flex:none;display:block;width:7px;height:20px;border-radius:2px;transform:skewY(-26deg);background:' + (!open ? 'rgba(255,255,255,.08)' : 'linear-gradient(to top,#2DD4C8 ' + Math.round(pc * 100) + '%,rgba(255,255,255,.16) ' + Math.round(pc * 100) + '%)') };
@@ -1026,7 +1026,7 @@ class Component extends DCLogic {
 
     const g = page.g;
     const lp = this.learnerPageNo(page.id);
-    const crumb = (lp ? 'Page ' + lp + ' · ' : '') + (page.day ? 'Day ' + page.day + ' · ' + page.kind + (typeof page.minutes === 'number' ? ' · ' + page.minutes + ' minutes' : '') : page.kind);
+    const crumb = (lp ? 'Page ' + lp + ' · ' : '') + (page.day ? 'Day ' + page.day + ' · ' + page.kind : page.kind);
 
     const fname = (box.p && box.p.name) || '';
     return {
@@ -1063,7 +1063,7 @@ class Component extends DCLogic {
       hasCode: !!page.day, pageCode: page.id, crumb, pageTitle: page.title,
       isLocked: locked, lockDay: page.day || '',
       isMap: page.id === 'map',
-      mapDays: [1, 2, 3].map(d => ({ n: d, title: W.days[d].title, state: this.isOpen(d) ? 'Open' : 'Locked', rows: pages.filter(p => p.day === d).map(p => ({ code: p.id, title: p.title, meta: 'Page ' + this.learnerPageNo(p.id) + ' · ' + (typeof p.minutes === 'number' ? p.minutes + ' min' : p.minutes), go: () => this.go(p.id) })) })),
+      mapDays: [1, 2, 3].map(d => ({ n: d, title: W.days[d].title, state: this.isOpen(d) ? 'Open' : 'Locked', rows: pages.filter(p => p.day === d).map(p => ({ code: p.id, title: p.title, meta: 'Page ' + this.learnerPageNo(p.id), go: () => this.go(p.id) })) })),
       isCodes: page.id === 'codes',
       codeDays: [1, 2, 3].map(d => ({ n: d, title: W.days[d].title, codes: W.codeWords[d].map(w => { const c = this.makeCode(d, w); return { code: c, label: s.copied === c ? 'Copied' : 'Copy', copy: () => this.copy(c, c) }; }) })),
       cw: s.cw, onCw: e => this.setState({ cw: e.target.value }),
@@ -1081,7 +1081,7 @@ class Component extends DCLogic {
       }),
       addCoach: () => this.upd(b => ({ ...b, coach: [...(b.coach || []), {}] })),
       showGuide: faci && !hide && !!g && !locked,
-      guideMeta: g ? g.minutes + ' minutes · Session ' + page.id + (lp ? ' · Learner page ' + lp : '') : '',
+      guideMeta: g ? 'Session ' + page.id + (lp ? ' · Learner page ' + lp : '') : '',
       guideTime: g ? g.time.map(t => ({ m: t[0], text: t[1] })) : [],
       guideParts: g ? g.parts.map(p => ({ h: p[0], paras: p[1] })) : [],
 
